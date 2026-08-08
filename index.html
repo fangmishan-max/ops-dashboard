@@ -282,7 +282,7 @@ window.__DASH_DATA = {
   contentMonitor: {
   "period": "2026-08-08 全量重跑（充值后）· 近 7 天：2026-08-01 ~ 2026-08-08",
   "keyword": "水晶手串、手串、手链、饰品",
-  "note": "规则：只监控最近 7 天内发布的热点爆款内容；关键词：水晶手串、手串、手链、饰品（小红书+抖音，每个关键词 6 篇：抖音 3 + 小红书 3）。互动值：小红书 = 点赞+2×收藏+2×评论；抖音 = 点赞+2×收藏+3×评论+4×分享。互动值按百分制展示（本组最高为 100 分，其余按比例换算）；80 分以上红、50-79 分黄、50 分以下蓝。低粉爆文口径：抖音作者粉丝 < 3000、小红书作者粉丝 < 1000，粉丝量标注在作者栏；带货爆款口径：小红书商品笔记（带商品卡）且无合作/推广标识。相关性过滤：正文或话题标签中必须包含饰品相关词（手链/手串/项链/水晶/黄金/首饰/长尾搭配词/平台活动词等），仅账号昵称命中的内容不纳入。数据来源：Just One API 关键词热度搜索（本次为充值后全量重跑）。",
+  "note": "规则：只监控最近 7 天内发布的热点爆款内容；关键词：水晶手串、手串、手链、饰品（小红书+抖音，每个关键词 6 篇：抖音 3 + 小红书 3）。互动值：小红书 = 点赞+2×收藏+2×评论；抖音 = 点赞+2×收藏+3×评论+4×分享。互动值按百分制展示（本组最高为 100 分，其余按比例换算）；80 分以上红、50-79 分黄、50 分以下蓝。低粉爆文口径：仅抖音，作者粉丝 < 3000、非广告，粉丝量标注在作者栏（小红书低粉、小红书商品笔记已按规则停采）。相关性过滤：正文或话题标签中必须包含饰品相关词（手链/手串/项链/水晶/黄金/首饰/长尾搭配词/平台活动词等），仅账号昵称命中的内容不纳入。数据来源：Just One API 关键词热度搜索（本次为充值后全量重跑）。",
   "tables": [
     {
       "term": "水晶手串",
@@ -617,7 +617,7 @@ window.__DASH_DATA = {
   ],
   "extraTables": [
     {
-      "title": "饰品赛道 · 近 7 天低粉爆文（目标 10 篇：抖音 5 + 小红书 5）",
+      "title": "饰品赛道 · 近 7 天低粉爆文（抖音 · 5 篇）",
       "rows": [
         [
           "douyin",
@@ -673,46 +673,13 @@ window.__DASH_DATA = {
           1129,
           271,
           5761
-        ],
-        [
-          "xiaohongshu",
-          "东北的准婆婆挺大气的，是第二次见面了，她大老远来了一趟，还给我送了礼物🎁，就是很轻描淡写的说买了一条手链送给我，我也没",
-          "https://www.xiaohongshu.com/explore/6a719248000000000503157c",
-          "唯你懂我心（粉丝 240）",
-          1215,
-          134,
-          1183,
-          118,
-          3849
-        ],
-        [
-          "xiaohongshu",
-          "啥也不说了老公哥，下辈子还跟你好 #一入黄金深似海 #手链推荐",
-          "https://www.xiaohongshu.com/explore/6a6dbd6f000000003300945d",
-          ".Ccccy（粉丝 54）",
-          1235,
-          246,
-          304,
-          1367,
-          2335
         ]
       ],
-      "qr": [
-        {
-          "id": "6a719248000000000503157c",
-          "title": "东北的准婆婆挺大气的，是第二次见面了，她大老远来了一趟，还给我送了礼物🎁，就是很轻描淡写的说买了一条手链送给我，我也没",
-          "data": "data:image/png;base64,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"
-        },
-        {
-          "id": "6a6dbd6f000000003300945d",
-          "title": "啥也不说了老公哥，下辈子还跟你好 #一入黄金深似海 #手链推荐",
-          "data": "data:image/png;base64,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"
-        }
-      ],
-      "note": "口径：抖音作者粉丝 < 3000、小红书作者粉丝 < 1000，非广告、近 7 天内发布且互动突出；粉丝量已标注在作者栏。本期：抖音 5 篇 + 小红书 2 篇；不足部分（目标 5+5）待下轮补充：抖音缺 0、小红书缺 3"
+      "qr": [],
+      "note": "口径：仅抖音，作者粉丝 < 3000、非广告、近 7 天内发布且互动突出；粉丝量已标注在作者栏（小红书低粉已按规则停采）。本期 5 篇"
     },
     {
-      "title": "跨赛道 · 近 7 天低粉爆文（目标 8 篇：抖音 3 + 小红书 5）",
+      "title": "跨赛道 · 近 7 天低粉爆文（抖音 · 3 篇）",
       "rows": [
         [
           "douyin",
@@ -749,13 +716,7 @@ window.__DASH_DATA = {
         ]
       ],
       "qr": [],
-      "note": "口径：抖音作者粉丝 < 3000、小红书作者粉丝 < 1000，近 7 天内发布且互动突出；粉丝量已标注在作者栏。本期：抖音 3 篇 + 小红书 0 篇；不足部分（目标 3+5）待下轮补充：抖音缺 0、小红书缺 5"
-    },
-    {
-      "title": "饰品赛道 · 近 7 天带货爆款笔记（小红书商品笔记 · 无推广 · 10 篇）",
-      "rows": [],
-      "qr": [],
-      "note": "口径：小红书商品笔记（get-note-detail/v1 的 goods_info 非空）且无合作/推广标识（cooperate_binds 为空），近 7 天内发布且互动突出。本期 0 篇；不足部分（目标 10 篇）待下轮补充（10 篇）"
+      "note": "口径：仅抖音，作者粉丝 < 3000、非广告、近 7 天内发布且互动突出；粉丝量已标注在作者栏（小红书低粉已按规则停采）。本期 3 篇"
     }
   ],
   "topicSuggestions": [
@@ -803,6 +764,7 @@ window.__DASH_DATA = {
     }
   ]
 }
+
 
 
 
