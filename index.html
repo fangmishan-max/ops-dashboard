@@ -134,6 +134,39 @@
     .cards2 { grid-template-columns: 1fr; }
     body { padding: 14px; }
   }
+  /* 移动端分页与适配 */
+  #mobile-nav { display: none; }
+  @media (max-width: 768px) {
+    body { padding-bottom: 78px; }
+    #mobile-nav {
+      display: flex;
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 99;
+      background: var(--panel-2);
+      border-top: 1px solid var(--line);
+    }
+    #mobile-nav .tab {
+      flex: 1;
+      padding: 10px 0 12px;
+      font-size: 12px;
+      color: var(--muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+    }
+    #mobile-nav .tab.active { color: var(--blue); border-bottom-color: var(--blue); font-weight: 700; }
+    .table-wrap { -webkit-overflow-scrolling: touch; }
+    .table-wrap table { min-width: 720px; }
+    table { font-size: 13px; }
+    th, td { padding: 7px 8px; }
+    .mini img[width="80"] { width: 56px !important; height: 56px !important; }
+    section { padding: 14px 12px; }
+    .kpi { padding: 12px 14px; }
+    .kpi .value { font-size: 24px; }
+    header h1 { font-size: 24px; }
+  }
 </style>
 </head>
 <body>
@@ -185,6 +218,15 @@
   <div class="note" style="margin-top:14px">小红书笔记在电脑浏览器打不开时，用小红书 App「扫一扫」扫表格中“二维码”列即可查看。</div>
   <div id="content-extra-tables"></div>
 </section>
+
+<nav id="mobile-nav" aria-label="页面切换">
+  <button class="tab active" data-page="overview">总览</button>
+  <button class="tab" data-page="funnel">排行</button>
+  <button class="tab" data-page="new">新品</button>
+  <button class="tab" data-page="pxi">体验分</button>
+  <button class="tab" data-page="stock">库存</button>
+  <button class="tab" data-page="content">内容</button>
+</nav>
 
 <footer>由每周一 14:00 定时任务自动更新 · 页面每 5 分钟自动刷新 · 生成于 <span id="gen-time"></span></footer>
 
@@ -1038,6 +1080,41 @@ contentHost.innerHTML = "";
 const extraHost = document.getElementById("content-extra-tables");
 extraHost.innerHTML = "";
 (C.extraTables || []).forEach(t => renderBoomTable(extraHost, t));
+</script>
+<script>
+/* 移动端分页：窄屏每次只显示一个板块，底部标签切换 */
+(function () {
+  const PAGES = {
+    overview: [".kpis", "#sec-topics"],
+    funnel: ["#sec-funnel"],
+    new: ["#sec-new"],
+    pxi: ["#sec-pxi"],
+    stock: ["#sec-stock"],
+    content: ["#sec-content"]
+  };
+  let current = "overview";
+  const isMobile = () => window.matchMedia("(max-width: 768px)").matches;
+  function apply() {
+    const m = isMobile();
+    document.querySelectorAll("section, .kpis").forEach(function (el) {
+      let page = null;
+      Object.keys(PAGES).some(function (k) {
+        if (PAGES[k].some(function (s) { return el.matches(s); })) { page = k; return true; }
+        return false;
+      });
+      el.style.display = (!m || page === current) ? "" : "none";
+    });
+    document.querySelectorAll("#mobile-nav .tab").forEach(function (b) {
+      b.classList.toggle("active", b.dataset.page === current);
+    });
+    if (m) window.scrollTo(0, 0);
+  }
+  document.querySelectorAll("#mobile-nav .tab").forEach(function (b) {
+    b.addEventListener("click", function () { current = b.dataset.page; apply(); });
+  });
+  window.addEventListener("resize", apply);
+  apply();
+})();
 </script>
 </body>
 </html>
