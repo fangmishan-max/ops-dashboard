@@ -154,6 +154,11 @@
   <div id="topic-suggestions"></div>
 </section>
 
+<section id="sec-topics">
+  <h2>选题建议 · 近 7 天（饰品赛道）</h2>
+  <div id="topic-suggestions"></div>
+</section>
+
 <section id="sec-funnel">
   <h2>① 商品排行 · 漏斗分析（7 天）<span class="tag" id="funnel-period"></span></h2>
   <div class="note">口径：访客 → 加购 → 支付，支付率 = 支付件数 ÷ 访客数；带环比较上一周期。</div>
@@ -762,6 +767,7 @@ window.__DASH_DATA = {
 
 
 
+
 };
 /* ===== 数据区结束 ===== */
 
@@ -835,27 +841,6 @@ document.getElementById("stock-body").innerHTML =
    <table><thead><tr><th>商品</th><th>商品ID</th><th>可售库存</th><th>缺货情况</th></tr></thead><tbody>
    ${D.stock.ip.map(s=>`<tr><td>${esc(s.name)}</td><td>${esc(s.id)}</td><td class="num">${esc(s.stock)}</td><td><span class="badge yellow">${esc(s.sku)}</span></td></tr>`).join("")}
    </tbody></table>`;
-
-// 选题建议（近 7 天 · 饰品赛道）
-const T = D.contentMonitor.topicSuggestions || [];
-const topicHost = document.getElementById("topic-suggestions");
-if (topicHost) {
-  topicHost.innerHTML = "";
-  if (T.length) {
-    const box = document.createElement("div");
-    box.className = "mini";
-    const th = ["参考链接", "选题类型", "选题内容", "潜在爆款因素"];
-    const tbody = T.map(r => `<tr>
-      <td><a href="${esc(r.link)}" target="_blank" rel="noopener" style="color:var(--blue)">${esc(r.linkText || "查看参考")}</a></td>
-      <td>${esc(r.type)}</td>
-      <td>${esc(r.content)}</td>
-      <td>${esc(r.factor)}</td>
-    </tr>`).join("");
-    box.innerHTML = '<div class="table-wrap"><table><thead><tr>' +
-      th.map(h => `<th>${esc(h)}</th>`).join("") + '</tr></thead><tbody>' + tbody + '</tbody></table></div>';
-    topicHost.appendChild(box);
-  }
-}
 
 // 选题建议（近 7 天 · 饰品赛道）
 const T = D.contentMonitor.topicSuggestions || [];
