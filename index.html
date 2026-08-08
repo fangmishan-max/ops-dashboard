@@ -168,12 +168,12 @@
 </section>
 
 <section id="sec-content">
-  <h2>⑤ 内容监控 · 小红书/抖音爆款（水晶手串）<span class="tag" id="content-period"></span></h2>
+  <h2>⑤ 内容监控 · 小红书/抖音爆款（饰品赛道）<span class="tag" id="content-period"></span></h2>
   <div class="note" id="content-note"></div>
   <div id="content-tables"></div>
   <div class="note" style="margin-top:14px">小红书笔记在电脑浏览器打不开时，用小红书 App「扫一扫」扫表格中“二维码”列即可查看。</div>
-  <div class="cards2" id="content-analyses" style="margin-top:14px"></div>
-  <div class="mini" style="margin-top:14px" id="content-topics"></div>
+  <div id="content-topic-suggestions"></div>
+  <div id="content-extra-tables"></div>
 </section>
 
 <footer>由每周一 14:00 定时任务自动更新 · 页面每 5 分钟自动刷新 · 生成于 <span id="gen-time"></span></footer>
@@ -270,50 +270,551 @@ window.__DASH_DATA = {
     ]
   },
   contentMonitor: {
-    period: "2026-08-08 试运行",
-    keyword: "水晶手串、手串、手链、饰品",
-    note: "规则：只监控最近 7 天内发布的热点爆款内容；关键词：水晶手串、手串、手链、饰品。数据来源：Just One API 关键词热度搜索（本轮为「水晶手串」试跑数据）。互动值 = 点赞 + 2×收藏 + 2×评论（小红书）；点赞 + 2×收藏 + 3×评论 + 4×分享（抖音）。互动值按百分制展示：以本组最高互动值为 100 分，其余按比例换算；分数用彩色标签标注（80 分以上红色、50-79 分黄色、50 分以下蓝色）。",
-    tables: [
+  "period": "2026-08-08 更新（近 7 天：2026-08-01 ~ 2026-08-08）",
+  "keyword": "水晶手串、手串、手链、饰品",
+  "note": "规则：只监控最近 7 天内发布的热点爆款内容；关键词：水晶手串、手串、手链、饰品（小红书+抖音）。互动值：小红书 = 点赞+2×收藏+2×评论；抖音 = 点赞+2×收藏+3×评论+4×分享。互动值按百分制展示（本组最高为 100 分，其余按比例换算）；80 分以上红、50-79 分黄、50 分以下蓝。低粉爆文口径：作者粉丝 < 1 万且互动突出；带货爆款口径：小红书商品笔记（带商品卡）且无合作/推广标识。数据来源：Just One API 关键词热度搜索。",
+  "tables": [
     {
-      term: "水晶手串",
-      rows: [
-      ["douyin", "雨晒或是风吹～#吉晶喜水晶手串", "https://www.douyin.com/video/7670884753608494050", "讨厌晚上", 1448, 258, 54, 62, 2374],
-      ["douyin", "沉浸式打包｜手串存在的意义是抬起手便能想起彼此", "https://www.douyin.com/video/7670879754313399205", "Sky Celeste", 225, 21, 184, 277, 1927],
-      ["douyin", "水晶DIY · 天然水晶 · 水晶定制", "https://www.douyin.com/video/7671238353015136881", "星澜 Crystal", 323, 24, 132, 0, 767],
-      ["xiaohongshu", "【1V1水晶定制|助眠】客订款分享", "https://www.xiaohongshu.com/explore/6a7058580000000033036143", "晶钰Crystal-", 272, 134, 2, 4, 544],
-      ["douyin", "初雪｜手串给的情绪价值 · 国风首饰", "https://www.douyin.com/video/7670630212568956529", "初贝的贝", 169, 64, 12, 38, 485],
-      ["xiaohongshu", "“人类为何如此迷恋绿色”原创", "https://www.xiaohongshu.com/explore/6a704dcf0000000005031b89", "Selike塞尔纪", 183, 65, 70, 29, 453],
-      ["xiaohongshu", "来烟台，一定要来体验下DIY水晶手串～", "https://www.xiaohongshu.com/explore/6a75c4e20000000005030370", "日进斗晶 水晶饰品集合地", 131, 156, 1, 8, 445],
-      ["xiaohongshu", "救命！戴上总忍不住低头看我的手腕", "https://www.xiaohongshu.com/explore/6a6e9711000000002800b784", "提拉米苏飞行", 134, 100, 38, 2, 410],
-      ["xiaohongshu", "时髦水晶系列补货 紫水来啦", "https://www.xiaohongshu.com/explore/6a6fe897000000003300946a", "ZCHOUCHOU", 211, 60, 7, 16, 345]
-    ],
-    qr: [
-      { id: "6a7058580000000033036143", title: "1V1水晶定制·助眠", data: "data:image/png;base64,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" },
-      { id: "6a704dcf0000000005031b89", title: "“人类为何如此迷恋绿色”", data: "data:image/png;base64,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" },
-      { id: "6a75c4e20000000005030370", title: "烟台DIY水晶手串体验", data: "data:image/png;base64,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" },
-      { id: "6a6e9711000000002800b784", title: "戴上总忍不住低头看手腕", data: "data:image/png;base64,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" },
-      { id: "6a6fe897000000003300946a", title: "时髦水晶补货·紫水", data: "data:image/png;base64,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" }
-    ]
+      "term": "水晶手串",
+      "rows": [
+        [
+          "douyin",
+          "雨晒或是风吹～#吉晶喜水晶手串",
+          "https://www.douyin.com/video/7670884753608494050",
+          "讨厌晚上",
+          1454,
+          261,
+          54,
+          63,
+          2390
+        ],
+        [
+          "xiaohongshu",
+          "真心话｜小初心✨ 0🐙🍞七夕礼物",
+          "https://www.xiaohongshu.com/explore/6a6f3d7e000000002c002a8c",
+          "玖紫手作",
+          334,
+          273,
+          716,
+          27,
+          2312
+        ],
+        [
+          "douyin",
+          "沉浸式📦｜手串存在的意义是抬起手便能想起彼此#沉浸式打包 #白噪音打包 #天然水晶 #水晶手串 #asmr",
+          "https://www.douyin.com/video/7670879754313399205",
+          "Sky Celeste🔮",
+          235,
+          21,
+          184,
+          277,
+          1937
+        ],
+        [
+          "xiaohongshu",
+          "水晶鉴定估价",
+          "https://www.xiaohongshu.com/explore/6a6fe29d0000000028033489",
+          "樹心 Tree Soul",
+          107,
+          95,
+          644,
+          3,
+          1585
+        ],
+        [
+          "douyin",
+          "音乐响起的那一刻仿佛那年夏天又回来了🎐✨ #风铃 #水晶 #梦幻珠帘#彩色宝石珠帘 #水晶手串diy",
+          "https://www.douyin.com/video/7671316422597755107",
+          "Erebosian",
+          1009,
+          44,
+          8,
+          71,
+          1405
+        ],
+        [
+          "xiaohongshu",
+          "𝐨𝐦𝐠!!紫葡萄🍇 来不及解释了 🫨快上车",
+          "https://www.xiaohongshu.com/explore/6a6dca760000000027022a32",
+          "Your present礼物",
+          620,
+          166,
+          58,
+          80,
+          1068
+        ],
+        [
+          "douyin",
+          "#水晶DIY#水晶手串 #天然水晶 #水晶能量 #水晶定制",
+          "https://www.douyin.com/video/7671238353015136881",
+          "星澜 Crystal",
+          339,
+          24,
+          139,
+          0,
+          804
+        ],
+        [
+          "douyin",
+          "海纹石爱心葫芦设计款#手串给的情绪价值 #水晶手串搭配 #蓝色系手串 #饰品实拍 #精致的手链 今天12点开播姐妹们等下见，福利10连炸",
+          "https://www.douyin.com/video/7671120704930754673",
+          "宇涵精品优选",
+          482,
+          11,
+          58,
+          1,
+          682
+        ]
+      ],
+      "qr": [
+        {
+          "id": "6a6f3d7e000000002c002a8c",
+          "title": "真心话｜小初心✨ 0🐙🍞七夕礼物",
+          "data": "data:image/png;base64,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"
+        },
+        {
+          "id": "6a6fe29d0000000028033489",
+          "title": "水晶鉴定估价",
+          "data": "data:image/png;base64,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"
+        },
+        {
+          "id": "6a6dca760000000027022a32",
+          "title": "𝐨𝐦𝐠!!紫葡萄🍇 来不及解释了 🫨快上车",
+          "data": "data:image/png;base64,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"
+        }
+      ]
     },
-    { term: "手串", rows: [], qr: [] },
-    { term: "手链", rows: [], qr: [] },
-    { term: "饰品", rows: [], qr: [] }
+    {
+      "term": "手串",
+      "rows": [
+        [
+          "douyin",
+          "感觉这个盘手串神器有点猛呀#盘串神器 #盘手串 #玩个很新的东西",
+          "https://www.douyin.com/video/7670980539633011974",
+          "耶比耶比",
+          17600,
+          5166,
+          6952,
+          1598,
+          55180
+        ],
+        [
+          "douyin",
+          "第一视角体验沈阳中药手串店🌿 #沈阳 #沈阳中药手串 #沈阳硬冰糖饰品集合店 #沈阳旅游",
+          "https://www.douyin.com/video/7670824237829939643",
+          "一块冰糖",
+          6777,
+          2558,
+          1018,
+          8674,
+          49643
+        ],
+        [
+          "douyin",
+          "走到哪带到哪的专属手串#离脉搏最近的是",
+          "https://www.douyin.com/video/7670482065556696761",
+          "贾4⃣️鼎",
+          33070,
+          481,
+          412,
+          3318,
+          48540
+        ],
+        [
+          "douyin",
+          "这些珠宝都是注胶的 介意的话以后就别买了！ 快看看你手里的饰品有没有中招！#珠宝首饰 #玉石魅力 #珠宝科普 #玉石科普 #石佛寺玉器市场",
+          "https://www.douyin.com/video/7670456500767022761",
+          "石佛寺文晴",
+          3887,
+          2098,
+          128,
+          5863,
+          31919
+        ],
+        [
+          "douyin",
+          "教大家一种精致小巧还很结实的手串收尾结， 双连结的打法#手串绳结打法 #文玩收尾打结教程 #文玩串绳教程 #双连结 #打结技巧",
+          "https://www.douyin.com/video/7670599457214770929",
+          "磊哥玩串📿",
+          3950,
+          5660,
+          123,
+          533,
+          17771
+        ],
+        [
+          "douyin",
+          "小师妹下山喽#万物皆可盘手串#申请加入串门",
+          "https://www.douyin.com/video/7671268133978321242",
+          "小星狗",
+          13715,
+          877,
+          69,
+          282,
+          16804
+        ],
+        [
+          "douyin",
+          "想当手串的第224天",
+          "https://www.douyin.com/video/7671167745317152689",
+          "年糕好好吃",
+          11543,
+          743,
+          144,
+          415,
+          15121
+        ],
+        [
+          "douyin",
+          "手串爱好者狂喜#万物皆可盘手串 #申请加入串门",
+          "https://www.douyin.com/video/7671322358199915242",
+          "铁岭县刘辉商店",
+          10270,
+          589,
+          41,
+          134,
+          12107
+        ]
+      ],
+      "qr": []
+    },
+    {
+      "term": "手链",
+      "rows": [
+        [
+          "douyin",
+          "1000克的黄金版秋天第一杯奶茶 你心动了吗#秋天第一杯奶茶 #黄金 #金首饰",
+          "https://www.douyin.com/video/7671232244815564084",
+          "小垒师傅在打金",
+          284959,
+          13125,
+          14761,
+          451671,
+          2162176
+        ],
+        [
+          "douyin",
+          "千禧年流行的儿童穿搭，你穿过哪一个#8090后 #童年回忆 #回不去的童年 #怀旧经典 #怀旧",
+          "https://www.douyin.com/video/7671185804270876069",
+          "启示回忆录",
+          26765,
+          1948,
+          4146,
+          164616,
+          701563
+        ],
+        [
+          "douyin",
+          "有个姐姐也还不错 #小阮想过平静的生活  #宿敌#FANCI范琦紫藤花 #范琦手链 #恋爱戴范琦",
+          "https://www.douyin.com/video/7670513935778467123",
+          "刺妮酱",
+          333427,
+          24609,
+          2133,
+          34336,
+          526388
+        ],
+        [
+          "douyin",
+          "今天是一期印象深刻礼物大公开",
+          "https://www.douyin.com/video/7671223414392311729",
+          "冬冬和37",
+          38640,
+          1199,
+          460,
+          1654,
+          49034
+        ],
+        [
+          "douyin",
+          "#黄金泥巴可以打首饰吗 #富婆小姐姐的盘缠手链来了 #AYOU黄金尤师傅黄金加工零损耗 #DIY手串红绳盘缠黄金手串链 #邯郸现场黄金加工定制 来料加工立等可取",
+          "https://www.douyin.com/video/7670767182522895658",
+          "AYOU黄金(邯郸店)",
+          9768,
+          974,
+          285,
+          6757,
+          39599
+        ],
+        [
+          "douyin",
+          "只有这样的首饰才能收我手工费啊 #珠宝首饰 #珠宝设计 #变形 #手工",
+          "https://www.douyin.com/video/7671100933279017593",
+          "嗑学家Momo",
+          15927,
+          1946,
+          203,
+          2819,
+          31704
+        ],
+        [
+          "douyin",
+          "决定了 你的手我握了就不会放掉 感谢你像幸运星一样出现在我生命中#范琦幸运星河手链  #多幸运有个我们   #FANCI范琦幸运星  #范琦时光恋人对戒",
+          "https://www.douyin.com/video/7670862256301404337",
+          "湫.",
+          15577,
+          401,
+          572,
+          307,
+          19323
+        ],
+        [
+          "douyin",
+          "钻钻马上就要出国读书了，今天去银匠村亲手做了个银饰项链给侄女钻钻，愿孩子在外平平安安，学业顺利，未来闪闪发光。#记录真实生活#日常vlog #银饰#夫妻日常 #情感@清植🤗秀桂🤗大哥一家 @秀桂🌈清植的日常",
+          "https://www.douyin.com/video/7671490522742529977",
+          "秀桂，加油⛽️加油！",
+          11972,
+          1580,
+          452,
+          97,
+          16876
+        ]
+      ],
+      "qr": []
+    },
+    {
+      "term": "饰品",
+      "rows": [
+        [
+          "douyin",
+          "@FANCI范琦官方旗舰店 七夕送你范琦蓝眼泪 希望你漂亮的眼睛只流幸福的眼泪#fanci范琦蓝眼泪 #范琦蓝眼泪项链#七夕礼物 #蓝色系 #饰品分享",
+          "https://www.douyin.com/video/7670498485757857701",
+          "范琦饰品心动日记",
+          34646,
+          2533,
+          438,
+          14130,
+          97546
+        ],
+        [
+          "xiaohongshu",
+          "挑战全网最冷门职业（第十五集）",
+          "https://www.xiaohongshu.com/explore/6a6de2c4000000000502a1e9",
+          "小鸡毛子",
+          37897,
+          3895,
+          659,
+          1114,
+          47005
+        ],
+        [
+          "xiaohongshu",
+          "MIGA•自制拼豆｜服装饰品图纸分享",
+          "https://www.xiaohongshu.com/explore/6a72db0e000000002800407c",
+          "起司布丁",
+          11124,
+          5790,
+          298,
+          586,
+          23300
+        ],
+        [
+          "xiaohongshu",
+          "少女时代的友谊 比初恋更刻骨铭心",
+          "https://www.xiaohongshu.com/explore/6a6dbb6d0000000033033955",
+          "芋泥麻薯冰",
+          9335,
+          3961,
+          697,
+          2432,
+          18651
+        ],
+        [
+          "xiaohongshu",
+          "oc配饰素材超全合集",
+          "https://www.xiaohongshu.com/explore/6a707fd6000000000801303f",
+          "韩女养成手册bot",
+          6216,
+          4493,
+          236,
+          215,
+          15674
+        ],
+        [
+          "douyin",
+          "分享几个百搭又显贵气的手镯手链搭配！ #首饰就要bling #手链 #配饰分享 #日常分享好看的饰品",
+          "https://www.douyin.com/video/7669996785046084267",
+          "未知🐟",
+          4958,
+          3208,
+          80,
+          844,
+          14990
+        ],
+        [
+          "xiaohongshu",
+          "喜提人生中第一件藏袍上戴的饰品啦✌️",
+          "https://www.xiaohongshu.com/explore/6a6dc00f00000000250113a7",
+          "央小央",
+          9944,
+          677,
+          864,
+          1447,
+          13026
+        ],
+        [
+          "douyin",
+          "今天我大徒弟回来了，非要跟师父合拍一曲，大家来指点一下吧#跟着晓如学化妆 #弱水三千 #小马哥手势舞",
+          "https://www.douyin.com/video/7671142568914599759",
+          "佳艳-小马哥新娘饰品",
+          4081,
+          242,
+          448,
+          1606,
+          12333
+        ]
+      ],
+      "qr": [
+        {
+          "id": "6a6de2c4000000000502a1e9",
+          "title": "挑战全网最冷门职业（第十五集）",
+          "data": "data:image/png;base64,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"
+        },
+        {
+          "id": "6a72db0e000000002800407c",
+          "title": "MIGA•自制拼豆｜服装饰品图纸分享",
+          "data": "data:image/png;base64,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"
+        },
+        {
+          "id": "6a6dbb6d0000000033033955",
+          "title": "少女时代的友谊 比初恋更刻骨铭心",
+          "data": "data:image/png;base64,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"
+        },
+        {
+          "id": "6a707fd6000000000801303f",
+          "title": "oc配饰素材超全合集",
+          "data": "data:image/png;base64,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"
+        },
+        {
+          "id": "6a6dc00f00000000250113a7",
+          "title": "喜提人生中第一件藏袍上戴的饰品啦✌️",
+          "data": "data:image/png;base64,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"
+        }
+      ]
+    }
   ],
-    analyses: [
-      { title: "抖音 · 雨晒或是风吹（互动值 2374）", topic: "氛围感佩戴展示短视频，画面为主、文案极简", factors: "点赞远高于其他互动 → 佩戴展示是传播主力；话题标签可直接带店铺词", confidence: "0.55" },
-      { title: "抖音 · 沉浸式打包 ASMR（互动值 1927）", topic: "沉浸式打包 + 白噪音，主打「送给重要的人」情感场景", factors: "分享 277 高于点赞 225 → 强转发型内容；情感文案天然带送礼场景", confidence: "0.60" },
-      { title: "抖音 · 水晶DIY/定制（互动值 767）", topic: "水晶DIY/定制过程视频，结尾引导评论咨询定制", factors: "评论 132 显著高于收藏 → 评论区适合做定制咨询转化", confidence: "0.55" },
-      { title: "小红书 · 1V1定制·助眠（互动值 544）", topic: "「1V1水晶定制案例分享」系列，主打助眠场景与定制参考", factors: "收藏占比近半 → 有「抄作业」价值；助眠是水晶类目高频场景词", confidence: "0.55" },
-      { title: "抖音 · 初雪·国风（互动值 485）", topic: "季节意象 + 国风美学主题的水晶手串展示系列", factors: "季节意象+情绪价值叠加；国风/东方美学标签有差异化", confidence: "0.50" }
-    ],
-    topics: [
-      "氛围感佩戴展示，画面为主、文案极简",
-      "沉浸式打包 + 白噪音，主打「送给重要的人」",
-      "水晶DIY/定制过程，结尾引导评论咨询",
-      "「1V1定制案例分享」系列，主打助眠场景",
-      "季节意象 + 国风美学系列（初雪、夏雨……）"
-    ]
-  }
+  "extraTables": [
+    {
+      "title": "饰品赛道 · 近 7 天低粉爆文（抖音 · 作者粉丝 < 1 万）",
+      "rows": [
+        [
+          "douyin",
+          "1000克的黄金版秋天第一杯奶茶 你心动了吗#秋天第一杯奶茶 #黄金 #金首饰",
+          "https://www.douyin.com/video/7671232244815564084",
+          "小垒师傅在打金",
+          284959,
+          13125,
+          14761,
+          451671,
+          2162176
+        ],
+        [
+          "douyin",
+          "#黄金泥巴可以打首饰吗 #富婆小姐姐的盘缠手链来了 #AYOU黄金尤师傅黄金加工零损耗 #DIY手串红绳盘缠黄金手串链 #邯郸现场黄金加工定制 来料加工立等可取",
+          "https://www.douyin.com/video/7670767182522895658",
+          "AYOU黄金(邯郸店)",
+          9768,
+          974,
+          285,
+          6757,
+          39599
+        ],
+        [
+          "douyin",
+          "教大家一种精致小巧还很结实的手串收尾结， 双连结的打法#手串绳结打法 #文玩收尾打结教程 #文玩串绳教程 #双连结 #打结技巧",
+          "https://www.douyin.com/video/7670599457214770929",
+          "磊哥玩串📿",
+          3950,
+          5660,
+          123,
+          533,
+          17771
+        ],
+        [
+          "douyin",
+          "分享几个百搭又显贵气的手镯手链搭配！ #首饰就要bling #手链 #配饰分享 #日常分享好看的饰品",
+          "https://www.douyin.com/video/7669996785046084267",
+          "未知🐟",
+          4958,
+          3208,
+          80,
+          844,
+          14990
+        ],
+        [
+          "douyin",
+          "#平价好看小饰品推荐 #首饰分享 @DOU+小助手",
+          "https://www.douyin.com/video/7669791454126490853",
+          "古丽首饰",
+          2992,
+          1357,
+          663,
+          1034,
+          11831
+        ]
+      ],
+      "qr": [],
+      "note": "口径：作者粉丝 < 1 万、非广告、近 7 天内发布且互动突出。本期为抖音数据；小红书低粉爆文需核验作者粉丝数，待 API 余额恢复后补充。"
+    },
+    {
+      "title": "跨赛道 · 近 7 天低粉爆文（粉丝 < 1 万）",
+      "rows": [],
+      "qr": [],
+      "note": "待补充：跨赛道关键词（家居好物 / 美妆等）采集需要 Just One API 余额，充值后自动补采并填充 3-5 篇。"
+    },
+    {
+      "title": "饰品赛道 · 近 7 天带货爆款笔记（小红书商品笔记 · 无推广）",
+      "rows": [],
+      "qr": [],
+      "note": "待补充：需逐篇核验小红书笔记为商品笔记（带商品卡）且无合作/推广标识；待 API 余额恢复后自动补采并填充 3-5 篇。"
+    }
+  ],
+  "topicSuggestions": [
+    {
+      "link": "https://www.douyin.com/video/7671232244815564084",
+      "linkText": "1000克的黄金版秋天第一杯奶茶",
+      "type": "热点梗 × 实物化",
+      "content": "「秋天的第一杯奶茶」做成黄金手链/首饰，把节日热点变成可佩戴的实物。",
+      "factor": "节日热点梗 + 黄金稀缺感 + 强视觉冲击，易引发围观与转发"
+    },
+    {
+      "link": "https://www.douyin.com/video/7670824237829939643",
+      "linkText": "第一视角体验沈阳中药手串店",
+      "type": "第一视角探店",
+      "content": "第一视角带逛特色手串/文玩店，突出沉浸感与地域特色。",
+      "factor": "第一视角沉浸感 + 地域话题 + 猎奇门店，完播与转发双高"
+    },
+    {
+      "link": "https://www.douyin.com/video/7670456500767022761",
+      "linkText": "这些珠宝都是注胶的",
+      "type": "避雷科普",
+      "content": "手串/饰品避雷向内容：注胶、染色、假货辨别，引导自查“你手里的有没有”。",
+      "factor": "争议性科普 + 消费者痛点，天然触发评论与收藏"
+    },
+    {
+      "link": "https://www.douyin.com/video/7670599457214770929",
+      "linkText": "手串收尾双连结打法",
+      "type": "实用教程",
+      "content": "手串绳结/收尾打法教程，步骤简单可跟做。",
+      "factor": "高收藏实用教程 + 低门槛跟做，收藏率高于点赞"
+    },
+    {
+      "link": "https://www.douyin.com/video/7670879754313399205",
+      "linkText": "沉浸式打包｜手串存在的意义",
+      "type": "沉浸式 / ASMR",
+      "content": "沉浸式手串打包 + 白噪音，主打“送给重要的人”的情绪价值。",
+      "factor": "解压 ASMR + 氛围感 + 情绪价值，完播与分享表现好"
+    },
+    {
+      "link": "https://www.xiaohongshu.com/explore/6a72db0e000000002800407c",
+      "linkText": "MIGA自制拼豆服装饰品图纸分享",
+      "type": "图纸 / 素材分享",
+      "content": "自制拼豆饰品图纸/素材免费分享，引导关注取图。",
+      "factor": "免费资源 + 高收藏 + 关注引导，收藏与转粉转化强"
+    }
+  ]
+}
+
 };
 /* ===== 数据区结束 ===== */
 
@@ -393,17 +894,16 @@ const C = D.contentMonitor;
 document.getElementById("content-period").textContent = "关键词「" + C.keyword + "」 · " + C.period;
 document.getElementById("content-note").textContent = C.note;
 const numCols = new Set(["点赞", "收藏", "评论", "分享", "互动值（百分制）"]);
-const contentHost = document.getElementById("content-tables");
-contentHost.innerHTML = "";
-(C.tables || []).forEach(t => {
+
+function renderBoomTable(host, t) {
   const rows = t.rows || [];
   const box = document.createElement("div");
   box.className = "mini";
   box.style.marginTop = "12px";
-  const head = `<h3>关键词：${esc(t.term)}</h3>`;
+  const head = `<h3>${esc(t.title)}</h3>`;
   if (!rows.length) {
-    box.innerHTML = head + '<p style="color:var(--muted);margin-top:6px">暂无数据（下次监控后填充）</p>';
-    contentHost.appendChild(box);
+    box.innerHTML = head + `<p style="color:var(--muted);margin-top:6px">${esc(t.note || "暂无数据（下次监控后填充）")}</p>`;
+    host.appendChild(box);
     return;
   }
   const maxIv = Math.max.apply(null, rows.map(r => Number(r[8]) || 0));
@@ -426,21 +926,39 @@ contentHost.innerHTML = "";
     </tr>`;
   }).join("");
   box.innerHTML = head +
+    (t.note ? `<p style="color:var(--muted);margin-top:4px;font-size:13px">${esc(t.note)}</p>` : "") +
     '<div class="table-wrap"><table><thead><tr>' +
     ch.map(h => `<th class="${numCols.has(h) ? "num" : ""}">${esc(h)}</th>`).join("") +
     '</tr></thead><tbody>' + tbody + '</tbody></table></div>';
-  contentHost.appendChild(box);
-});
+  host.appendChild(box);
+}
 
-document.getElementById("content-analyses").innerHTML = C.analyses.map(a =>
-  `<div class="mini"><h3>${esc(a.title)}</h3>
-     <p style="margin-top:6px"><b>可复用选题：</b>${esc(a.topic)}</p>
-     <p style="margin-top:6px"><b>爆款因素：</b>${esc(a.factors)}</p>
-   </div>`
-).join("");
+const contentHost = document.getElementById("content-tables");
+contentHost.innerHTML = "";
+(C.tables || []).forEach(t => renderBoomTable(contentHost, { title: "关键词：" + t.term, rows: t.rows, qr: t.qr }));
 
-document.getElementById("content-topics").innerHTML =
-  "<h3>优先选题建议（可直接做内容）</h3><p>" + C.topics.map((t, i) => `${i + 1}. ${esc(t)}`).join("<br>") + "</p>";
+const topicHost = document.getElementById("content-topic-suggestions");
+topicHost.innerHTML = "";
+const topicRows = C.topicSuggestions || [];
+if (topicRows.length) {
+  const box = document.createElement("div");
+  box.className = "mini";
+  box.style.marginTop = "12px";
+  const th = ["参考链接", "选题类型", "选题内容", "潜在爆款因素"];
+  const tbody = topicRows.map(r => `<tr>
+    <td><a href="${esc(r.link)}" target="_blank" rel="noopener" style="color:var(--blue)">${esc(r.linkText || "查看参考")}</a></td>
+    <td>${esc(r.type)}</td>
+    <td>${esc(r.content)}</td>
+    <td>${esc(r.factor)}</td>
+  </tr>`).join("");
+  box.innerHTML = '<h3>饰品赛道 · 最近 7 天选题建议</h3><div class="table-wrap"><table><thead><tr>' +
+    th.map(h => `<th>${esc(h)}</th>`).join("") + '</tr></thead><tbody>' + tbody + '</tbody></table></div>';
+  topicHost.appendChild(box);
+}
+
+const extraHost = document.getElementById("content-extra-tables");
+extraHost.innerHTML = "";
+(C.extraTables || []).forEach(t => renderBoomTable(extraHost, t));
 </script>
 </body>
 </html>
