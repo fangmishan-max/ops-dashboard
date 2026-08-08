@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="refresh" content="300">
+<title>每周运营检查工作台</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --panel: #1e293b;
+    --panel-2: #16213a;
+    --line: #334155;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --green: #34d399;
+    --yellow: #fbbf24;
+    --red: #f87171;
+    --blue: #60a5fa;
+    --purple: #c084fc;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif;
+    padding: 22px 28px 28px;
+    min-height: 100vh;
+  }
+  header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-bottom: 2px solid var(--line);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+  header h1 { font-size: 30px; font-weight: 700; letter-spacing: 1px; }
+  header .sub { color: var(--muted); font-size: 15px; }
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .kpi {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .kpi .label { color: var(--muted); font-size: 14px; margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; }
+  .kpi .delta { font-size: 14px; margin-top: 4px; }
+  section {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px 18px 18px;
+    margin-bottom: 18px;
+  }
+  section h2 {
+    font-size: 20px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  section h2 .tag {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 2px 10px;
+  }
+  .note { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { color: var(--muted); font-weight: 500; font-size: 13px; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.hl-red td { background: rgba(248,113,113,.10); }
+  tr.hl-yellow td { background: rgba(251,191,36,.08); }
+  tr.hl-green td { background: rgba(52,211,153,.08); }
+  .up { color: var(--red); }
+  .down { color: var(--green); }
+  .flat { color: var(--muted); }
+  .badge {
+    display: inline-block;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .badge.red { background: rgba(248,113,113,.18); color: var(--red); }
+  .badge.yellow { background: rgba(251,191,36,.16); color: var(--yellow); }
+  .badge.green { background: rgba(52,211,153,.16); color: var(--green); }
+  .badge.blue { background: rgba(96,165,250,.16); color: var(--blue); }
+  .cards2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .mini {
+    background: var(--panel-2);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .mini h3 { font-size: 15px; margin-bottom: 8px; color: var(--blue); }
+  .mini p { font-size: 14px; line-height: 1.7; color: var(--text); }
+  .mini .warn { color: var(--red); font-weight: 600; }
+  .mini .ok { color: var(--green); font-weight: 600; }
+  .flex {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .stat {
+    background: var(--panel-2);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .stat .label { color: var(--muted); font-size: 13px; }
+  .stat .value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+  .stat .vs { color: var(--muted); font-size: 13px; margin-top: 3px; }
+  footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 8px; }
+  @media (max-width: 900px) {
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+    .cards2 { grid-template-columns: 1fr; }
+    body { padding: 14px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>每周运营检查工作台</h1>
+  <div class="sub" id="header-sub"></div>
+</header>
+
+<div class="kpis" id="kpis"></div>
+
+<section id="sec-funnel">
+  <h2>① 商品排行 · 漏斗分析（7 天）<span class="tag" id="funnel-period"></span></h2>
+  <div class="note">口径：访客 → 加购 → 支付，支付率 = 支付件数 ÷ 访客数；带环比较上一周期。</div>
+  <div class="table-wrap"><table id="funnel-table"></table></div>
+  <div class="cards2" id="funnel-notes"></div>
+</section>
+
+<section id="sec-new">
+  <h2>② 新品追踪（近两月上架 · 7 天）<span class="tag" id="new-period"></span></h2>
+  <div class="flex" id="new-stats"></div>
+  <div class="note" style="margin-top:14px">表现突出的新品（按成交/流量）：</div>
+  <div class="table-wrap"><table id="new-table"></table></div>
+</section>
+
+<section id="sec-pxi">
+  <h2>③ 商品体验分（PXI）</h2>
+  <div class="flex" id="pxi-stats"></div>
+  <div class="cards2" id="pxi-lists"></div>
+</section>
+
+<section id="sec-stock">
+  <h2>④ 仓储库存</h2>
+  <div id="stock-body"></div>
+</section>
+
+<section id="sec-content">
+  <h2>⑤ 内容监控 · 小红书/抖音爆款（水晶手串）<span class="tag" id="content-period"></span></h2>
+  <div class="note" id="content-note"></div>
+  <div id="content-tables"></div>
+  <div class="note" style="margin-top:14px">小红书笔记在电脑浏览器打不开时，用小红书 App「扫一扫」扫表格中“二维码”列即可查看。</div>
+  <div class="cards2" id="content-analyses" style="margin-top:14px"></div>
+  <div class="mini" style="margin-top:14px" id="content-topics"></div>
+</section>
+
+<footer>由每周一 14:00 定时任务自动更新 · 页面每 5 分钟自动刷新 · 生成于 <span id="gen-time"></span></footer>
+
+<script>
+/* ===== 数据区：每周任务运行后更新此处即可 ===== */
+window.__DASH_DATA = {
+  period: "2026-07-31 ~ 2026-08-06",
+  updated: "2026-08-07 21:20",
+  kpis: [
+    { label: "支付金额 TOP 商品", value: "风生水起 ¥2,123", delta: "较上周 +6.5%", cls: "green" },
+    { label: "新品支付金额（7天）", value: "¥2,859.78", delta: "同行平均 ¥1,400", cls: "blue" },
+    { label: "PXI 90 分以上", value: "86 / 92", delta: "低于 90 分 6 个", cls: "yellow" },
+    { label: "店铺真实体验分", value: "4.60", delta: "宝贝质量 4.55 · 物流 4.72 · 服务 4.65", cls: "blue" }
+  ],
+  funnel: {
+    period: "2026-07-31 ~ 2026-08-06",
+    rows: [
+      ["风生水起", "1,196", "+3.5%", "128", "-14.7%", "30", "+3.5%", "2,123", "+6.5%", "349", "+7.3%", "10.7%", "2.5%", ""],
+      ["日生紫烟", "1,322", "+20.1%", "98", "+15.3%", "8", "+33.3%", "1,224", "+25.8%", "306", "-37.4%", "7.4%", "0.6%", "red"],
+      ["福禄来（新品）", "57", "+54.1%", "5", "-", "2", "-", "734", "-", "0", "-", "8.8%", "3.5%", "green"],
+      ["粉泡泡", "70", "+1.5%", "4", "-", "1", "-", "658", "-", "0", "-", "5.7%", "1.4%", ""],
+      ["香炉紫烟", "653", "+6.5%", "71", "-7.8%", "5", "-54.6%", "570", "-57.7%", "836", "+233.1%", "10.9%", "0.8%", "red"],
+      ["月光协奏曲", "28", "-12.5%", "4", "-", "3", "-", "557", "-", "189", "-", "14.3%", "10.7%", ""],
+      ["暮色将尽（新品）", "54", "-78.3%", "6", "+50%", "3", "+50%", "557", "+51%", "0", "-", "11.1%", "5.6%", "green"],
+      ["梦幻星球", "206", "+10.2%", "12", "-33.3%", "2", "-", "376", "-", "0", "-", "5.8%", "1.0%", ""],
+      ["光年之外（新品）", "73", "+151.7%", "7", "+133%", "2", "-", "374", "-", "0", "-", "9.6%", "2.7%", "green"],
+      ["秘境", "202", "-2.4%", "29", "-17.1%", "6", "-", "336", "-", "56", "-", "14.4%", "3.0%", ""]
+    ],
+    notes: [
+      { title: "日生紫烟 · 高流量低转化", text: "访客 1,322 全店最高，支付率仅 0.6%，断点在「加购 → 支付」，建议查详情页/价格/评价承接。", cls: "warn" },
+      { title: "香炉紫烟 · 退款异常", text: "成功退款 ¥836 已超过支付金额 ¥570（+233%），需优先排查退款原因与售后问题。", cls: "warn" },
+      { title: "风生水起 · 承接下滑", text: "销冠支付金额 +6.5%，但加购件数 -14.7%，承接力走弱，建议关注加购转化与主图卖点。", cls: "warn" },
+      { title: "新品 · 流量爬坡", text: "福禄来 / 光年之外 / 暮色将尽访客与成交均在增长；暮色将尽访客 -78% 需查流量退坡。", cls: "ok" }
+    ]
+  },
+  newProducts: {
+    period: "2026-07-31 ~ 2026-08-06",
+    stats: [
+      { label: "新品数", value: "30", vs: "同行 21" },
+      { label: "访客数", value: "532", vs: "同行 551" },
+      { label: "加购人数", value: "41", vs: "同行 52" },
+      { label: "支付买家数", value: "5", vs: "同行 16" },
+      { label: "支付金额", value: "¥2,859.78", vs: "同行 ¥1,400" }
+    ],
+    rows: [
+      ["福禄来", "人气新品", "07-19", "57", "5", "2", "734.00", "12.88", "已售 3 · 暂无评价"],
+      ["暮色将尽", "人气新品", "07-12", "54", "6", "3", "557.00", "10.31", "已售 7 · 带图好评 1"],
+      ["光年之外", "普通新品", "07-19", "73", "7", "2", "373.78", "5.12", "有成交 · 评价待确认"],
+      ["星际穿越", "普通新品", "07-19", "61", "6", "1", "188.00", "3.08", "评价待确认"],
+      ["粉色岛屿", "普通新品", "07-19", "25", "4", "1", "186.00", "7.44", "评价待确认"],
+      ["粉泡泡", "普通新品", "06-21", "70", "4", "1", "658.00", "9.40", "评价待确认"]
+    ]
+  },
+  pxi: {
+    store: "4.60",
+    stats: [
+      { label: "全部商品", value: "92" },
+      { label: "90-100 分", value: "86", cls: "green" },
+      { label: "80-89 分", value: "2", cls: "yellow" },
+      { label: "70-79 分", value: "3", cls: "red" }
+    ],
+    lists: [
+      { title: "80-89 分商品（重点优化）", items: [
+        "风生水起 · 87 分（落后 41% 同类目）",
+        "香炉紫烟 · 81 分（落后 60% 同类目）"
+      ], cls: "warn" },
+      { title: "70-79 分商品（流量受影响）", items: [
+        "乏乏桃桃（原创粉水晶多宝手串）",
+        "粉晶叮咛（粉水晶雪花手串）",
+        "小海螺（天然贝壳项链）"
+      ], cls: "warn" }
+    ]
+  },
+  stock: {
+    mode: "普通商品库存",
+    fields: "可售库存 / 预扣库存 / 占用库存",
+    total: "381",
+    warnCount: "37",
+    note: "数据来源：库存诊断-缺货情况；SKU 级明细（含手围参考类）由每周任务导出核对，手围参考等 0 库存 SKU 已按规则剔除，不纳入总结。",
+    core: [
+      { name: "风生水起（五行双圈黑曜石绿檀木）", id: "896223664958", sku: "13/30 SKU 缺货", stock: "1,696", status: "出售中" },
+      { name: "MBTI 印象手链 16 型人格", id: "803886512683", sku: "5/85 SKU 缺货", stock: "7,950", status: "仓库中" },
+      { name: "黑祭司（银曜石黑金超七）", id: "953889522115", sku: "6/12 SKU 缺货", stock: "500", status: "出售中" },
+      { name: "流水生财（五行双圈黑曜石白水晶海蓝宝）", id: "914948207842", sku: "7/14 SKU 缺货", stock: "211", status: "出售中" }
+    ],
+    ip: [
+      { name: "恋与深空【沈星回】s925 银黄塔晶双层手串", id: "839097976889", sku: "10/30", stock: "1,369" },
+      { name: "恋与深空【沈星回】天然水晶黄塔晶珍珠星星", id: "833073175644", sku: "15/35", stock: "1,312" },
+      { name: "光与夜之恋【查理苏】天然紫水晶黄塔晶", id: "821604988975", sku: "5/15", stock: "921" },
+      { name: "恋与深空【秦彻】红玛瑙国风双圈", id: "839961710131", sku: "5/15", stock: "734" },
+      { name: "恋与深空【沈星回】珍珠手链", id: "843128008939", sku: "1/10", stock: "618" },
+      { name: "光与夜之恋【查理苏】纯银虎眼石", id: "824387994630", sku: "10/15", stock: "486" }
+    ]
+  },
+  contentMonitor: {
+    period: "2026-08-08 试运行",
+    keyword: "水晶手串、手串、手链、饰品",
+    note: "规则：只监控最近 7 天内发布的热点爆款内容；关键词：水晶手串、手串、手链、饰品。数据来源：Just One API 关键词热度搜索（本轮为「水晶手串」试跑数据）。互动值 = 点赞 + 2×收藏 + 2×评论（小红书）；点赞 + 2×收藏 + 3×评论 + 4×分享（抖音）。互动值按百分制展示：以本组最高互动值为 100 分，其余按比例换算；分数用彩色标签标注（80 分以上红色、50-79 分黄色、50 分以下蓝色）。",
+    tables: [
+    {
+      term: "水晶手串",
+      rows: [
+      ["douyin", "雨晒或是风吹～#吉晶喜水晶手串", "https://www.douyin.com/video/7670884753608494050", "讨厌晚上", 1448, 258, 54, 62, 2374],
+      ["douyin", "沉浸式打包｜手串存在的意义是抬起手便能想起彼此", "https://www.douyin.com/video/7670879754313399205", "Sky Celeste", 225, 21, 184, 277, 1927],
+      ["douyin", "水晶DIY · 天然水晶 · 水晶定制", "https://www.douyin.com/video/7671238353015136881", "星澜 Crystal", 323, 24, 132, 0, 767],
+      ["xiaohongshu", "【1V1水晶定制|助眠】客订款分享", "https://www.xiaohongshu.com/explore/6a7058580000000033036143", "晶钰Crystal-", 272, 134, 2, 4, 544],
+      ["douyin", "初雪｜手串给的情绪价值 · 国风首饰", "https://www.douyin.com/video/7670630212568956529", "初贝的贝", 169, 64, 12, 38, 485],
+      ["xiaohongshu", "“人类为何如此迷恋绿色”原创", "https://www.xiaohongshu.com/explore/6a704dcf0000000005031b89", "Selike塞尔纪", 183, 65, 70, 29, 453],
+      ["xiaohongshu", "来烟台，一定要来体验下DIY水晶手串～", "https://www.xiaohongshu.com/explore/6a75c4e20000000005030370", "日进斗晶 水晶饰品集合地", 131, 156, 1, 8, 445],
+      ["xiaohongshu", "救命！戴上总忍不住低头看我的手腕", "https://www.xiaohongshu.com/explore/6a6e9711000000002800b784", "提拉米苏飞行", 134, 100, 38, 2, 410],
+      ["xiaohongshu", "时髦水晶系列补货 紫水来啦", "https://www.xiaohongshu.com/explore/6a6fe897000000003300946a", "ZCHOUCHOU", 211, 60, 7, 16, 345]
+    ],
+    qr: [
+      { id: "6a7058580000000033036143", title: "1V1水晶定制·助眠", data: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqwAAAKsAQAAAAABudKdAAAGlUlEQVR4nO1dW47jOAwsFebfucHc/1h9g/gEWkiiJNLu/Qu9yKIKjbSfhYChaJEU6VKRgJMZrIBoISF0ECmgaCEhSBMMRAooWkgI0gQDkQKKFhKCNMFApICihYQgTYjDoSy8gLP9b5+vfaptneFzHS+veLuj/TT4cUbRThApoGjxZUL4Y/+P9/jfBzxa4PGotrtOHbUc79I23m3bXX+5/duEQNFCQpAm3IZDmU/58dxfU4L6M5/+Z6nvZivqT6k//dS7/V1uv9B+FPwsnWgdiBRQtPgyIcx5wgXjud8nA21KcJYK1PNVjnczFH0K0Xf7xnPflqKFhCBNeHw41PH0H5OEWocRWKGGdWRYBvv8777tJ8CPsIj2NxApoGiRL4RaqzkCR23uw/QjlhFoG9041BouuN6un8xApICihYTwgCacIY+wLIPtjnhjPL6wUhUWhZDeGogUULSQEPLjCdUdqiN64I/Ez7ZxljqSkuuI9PYKIgUULSSEZzThLD7j0HyEn55oGAmIsWhhZiVGAsJOudultw5ECihaSAiJmoAWB6g9ffCeMYGjfa5R7y+wqOOILawAY483rrOdhNJbSG9lwQzEF9qEOkxBH+8+m2Bnh02YG8sCWPbB7comfK0mULSQEKJNqONB3zeCEZizBbt+WYO562cOsgkORAooWkgIiZqA4BqsVQd+/nAxDtNi+F37nMZBvkMHkQKKFhJCoibAewfmBaxlSCue4DwFN/DjpMK7D4onaPAaiBRQtMifJwQHwQUZ1nzAb0QLMKcKMyghm9BBpICihYSQqAnYfsFIN3j74LIJewqxDrpT+17ZhA0iBRQtJIRnaqDOvvxgLkAql4rpXQeNVQDVSqLmEqbOsBYoUHoLCUGa8L+IMYayBRdesONzPrCCCSt3GaB4QuJPRtFCQngmF1nNC2hHnS9g1/nlSbcFS5ezsgkdRAooWkgIiZqAZRP8YoNfLpjLD+LY3/HGlYOQTZggUkDRQkJI1AQEm+AXKrj1ir6f0rYP7rK1HFo2wYFIAUULCSFRExADAWHC4CsgwkrFlWLwCQjVO1xBpICihYSQqAm4+gVu1cH2EeKpSwpyQ/GEACIFFC0khCfXMdZbL4RV6ORKHvyfjzrKd3AgUkDRQkLI14Qyeqz5Xmo7OGBHrOHSWLHwt/dhiy2YRjNn6e0EkQKKFhJCoiZgD/wYNNgXxMlA8Br8FMIvVND6BA1eA5ECihbP+A4evtLBHfSRRrvMUckmOBApoGghIeRrQim9M/MKESD4AivLMN7/Yn2b/zr7UGMfNv1kEoKBSAFFi2Qh7Pc4vG5tlDxmD8ZhOkZjxtXXXT9ZBJECihYSwlN1kVjhAn/22i8lLlKK/RaUd3AgUkDRQkJ4as0S7nUN1+Km3T/BL1oIRVKKMRqIFFC0kBAemyccruwxtkm5V0PsBMQyF9t0UHoL6a0smIH43l7u79hDKfZrvfZR8f1afUGlbMJXagJFCwmho96cgktLpcs6hHtT1t86u1IKBimYTI2B+NL1CYcb15f2Kb4s2oUiQ+JSPVq/WxMoWkgIHdUtWLoYhx1m9AP/5lPsukjlHQKIFFC0kBASNQE+6RDf2+Iiirda6VAJdVnzLN/BQKSAooWEkKgJ8HODkD64ZRs3QjjxGoWQTZggUkDRQkJI1ASETKLPO/j2Si7YuAOSt04LmidEECmgaCEhPNLLvQD1sBXOrSv78d5Rx7PUcUGvaGjbRx3N3kvo5a56Bw8iBRQtJIR8m1DaQ789+22kW13Dq7rXPWCaAjiD4N/7UPV+hwAiBRQtJIR8TaiuTWurfOz1j61xSi+ZtMKoGUscFU+jQDL0WdqF1ZTeQkKQJuCLh0NZeDUXYJiFcWplJcYp5yDsish11yyQZOq3/TT4cUbRThApoGiRHU/ojsP2HbxfcL6GU9BfFdeCDOv9ccOz2Lvd19BPNkGkgKKFhPCIJpQxSZj9VXxFg00DSn+h5OiZUMqYSOxTIV9J6S0kBGnCt79D1qHGt8rOXMN7TR4swLiDiobxVtlvEwJFCwlBmvDvNqGutOM0AsMgtPZK/WDINXSHYrkPE0QKKFpICNKEp+YJ1R3d4YK+UMEswPEeOco5GdgXt8vCnIE535aihYQgTXjGJpw7m9B3X2sVU1mn4jW2cukWnMz8thQtJARpQu5wKLce7p/AqcELDd4OIgUULSQEaYKBSAFFCwlBmmAgUkDRQkKQJhiIFFC0kBCkCYak4fAPMmUQt0mBRegAAAAASUVORK5CYII=" },
+      { id: "6a704dcf0000000005031b89", title: "“人类为何如此迷恋绿色”", data: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqwAAAKsAQAAAAABudKdAAAGTUlEQVR4nO2dUY7sKgxEi9L7T+9g9r+s2UGyAq4AQwzJ37vmqqU6GrW66aQ+PA4NxpiUEcDFCFVAspARKkQIlCxkBHmCQYRAyUJGkCcYRAiULGQEeYJBhEDJQkaQJ8yPQxp8kD616Ur2VW1JKbWW9t5ek2vpt3vZvw3/uqJkO0QIlCy+zAjIFRz5fnMCRx5/+ezXAPZVvavcXN/bZV7n/C4jULKQEeQJndyf5fKh9QOtvXcF1huUJ723nPXb9nF0IL5zUJ9QIEKgZCEj7PWEfJbXNgsor1cqD/t4BdJPefbHLKNdL799QIRAyUJGCPSE/55NCSi/+tenPP9XykBuXYH7trxen/JtH1fIbx8QIVCykBE2xxOW6MEILGQXYRhjg2O+S3OHGyIEShYywgZPuGzdYCw0lNnBzzQG6GsKZe7Qpg8tjNDmF+N2+W2HCIGShYwQP3fIvq2vQrY3ZeLQ3owWd0uZWSy3y28NIgRKFjJCoCcge+pkYVpoqHMEW3ls9OFBW3e4W9wUQ+sOFSIEShYyQqAn4O4NenBg9AlTj3G+XexWHKbrtRaph9cgQqBkEW2E/oC3fMV8WkhhuratRV4p/dSL2+rkCDPWj8pjdBAhULKQEQI9AX5gMOYLY7Iw0pncmsLdbtfPF2uc0CFCoGQhI+zKY8w9dbnQAwsjtuBvWTOfXc6z+oQOEQIlCxlhT37C6eKKIwlhZCaMbGeX2GyNPTLpkp8pv4X8Vj2YQXzjWuRV8hXLQuPIOgBSHzPU9jMd2VIc27c1lbE0uqFFOs4vNAIlCxlBntDJI4zgliPviYNfdvQBBBdkmCYgiifcECFQspARtuU2n30Boi9DTFHENYEZ04RCuc0rRAiULGSEQE+A392wpi31PITpep+cMLoOP5BQPMEgQqBkISMEegKmJch51/MdThzxRnfX1HWofsILRAiULGSEbWuRlSVu0N4X5jjDPa6Yww61kfJbyG/VgxnEd84d4J/3kYEwzwvsWz9scJcpP+GbPYGShYww9wl5RBJ6MlLhUVfN74nwjKGFxgkdIgRKFjLCNk+4rAZC/q0VmI+cf+vHtrvhsrLMd21nV7/xrtUmvzWIEChZyAi7Yoxw+czv9ZSWbEYXf/AjDcUTKkQIlCxkhC2ekMYPvf/1/+mziTEG6Jsf7dyHt7v0L6sQIVCykBHic5tTzVueCi6N6qyWrnx/ZTVaRzVX1Vl6hwiBkoWMsG3uMPCpy34AsIQf54wmxRhniBAoWcgIgZ4A6xOm3Qrz5uh5Q/Ry8ctmB8UTDCIEShYywsY9UHBV1JZSbNPxTy5XwddmVJ/gIEKgZCEjbKufcLp6CO4xn853WMq6zmlO6hMcRAiULGSEQE+Af65Hiz9J1qcnTRWWXE+ius1vECFQspARNtZeyy4JYS3DOM8U/HBiTECUn+AgQqBkISPsPVc6jzWI5aD5ubr7Mq7wNZyVs1QhQqBkISMEegJ8LqIPJhSWjmLZCtF4PZ5e+yL18BpECJQsdq1Fro/8OATKTRyWjZNLMoP6hA4RAiULGWHjudL57Xi4NTOh4YYWfjVTfUKHCIGShYwQ7wm57nws1LOkbRdDso2Qtt+hfsy/6bkDwsT6xkn9yypECJQsZIRdOUvwJ8M+sg7WNGZXrs2fNqtxQocIgZKFjLAtj/F0mQaNZR+0K+S+diCu7opijBUiBEoWMkKgJ+AOI/h4ow8t+kMk5+Oi1j/FEyaIEChZyAh76zHmx66Hl7vGiOLRqHFChwiBkoWMEOgJ8DsX7jUIt5pQeJwMNeGrOCqecEOEQMlCRtgzTmj4E6BGqGEeFaydwyP+oHhChQiBkoWMsDE/ASNF2ccQfC33pX778+Bp9QkGEQIlCxnhX+x3yL0HWE6AmnqDZbSgtcgJIgRKFjLC5j4hz3nO89kufhu1STzGDJo7VIgQKFnICPE1WhdKaVYr0HrnKJa/40xXykcu793FVqn1biRCoGQhI8gTdj0OeawyuK6gHf5yjxyumtjcarz/ppG+uCY5y29lBIMIgZJF9DjB/e7Xj5/2eLfWdJztAl+/vVWAb9e4EYL+ZQMiBEoWMkKgJ6SXhKT/zyW/hfy2QoRAyUJGkCcYRAiULGQEeYJBhEDJQkaQJxhECJQsZAR5ghH0OPwBAyo0JzApfy8AAAAASUVORK5CYII=" },
+      { id: "6a75c4e20000000005030370", title: "烟台DIY水晶手串体验", data: "data:image/png;base64,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" },
+      { id: "6a6e9711000000002800b784", title: "戴上总忍不住低头看手腕", data: "data:image/png;base64,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" },
+      { id: "6a6fe897000000003300946a", title: "时髦水晶补货·紫水", data: "data:image/png;base64,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" }
+    ]
+    },
+    { term: "手串", rows: [], qr: [] },
+    { term: "手链", rows: [], qr: [] },
+    { term: "饰品", rows: [], qr: [] }
+  ],
+    analyses: [
+      { title: "抖音 · 雨晒或是风吹（互动值 2374）", topic: "氛围感佩戴展示短视频，画面为主、文案极简", factors: "点赞远高于其他互动 → 佩戴展示是传播主力；话题标签可直接带店铺词", confidence: "0.55" },
+      { title: "抖音 · 沉浸式打包 ASMR（互动值 1927）", topic: "沉浸式打包 + 白噪音，主打「送给重要的人」情感场景", factors: "分享 277 高于点赞 225 → 强转发型内容；情感文案天然带送礼场景", confidence: "0.60" },
+      { title: "抖音 · 水晶DIY/定制（互动值 767）", topic: "水晶DIY/定制过程视频，结尾引导评论咨询定制", factors: "评论 132 显著高于收藏 → 评论区适合做定制咨询转化", confidence: "0.55" },
+      { title: "小红书 · 1V1定制·助眠（互动值 544）", topic: "「1V1水晶定制案例分享」系列，主打助眠场景与定制参考", factors: "收藏占比近半 → 有「抄作业」价值；助眠是水晶类目高频场景词", confidence: "0.55" },
+      { title: "抖音 · 初雪·国风（互动值 485）", topic: "季节意象 + 国风美学主题的水晶手串展示系列", factors: "季节意象+情绪价值叠加；国风/东方美学标签有差异化", confidence: "0.50" }
+    ],
+    topics: [
+      "氛围感佩戴展示，画面为主、文案极简",
+      "沉浸式打包 + 白噪音，主打「送给重要的人」",
+      "水晶DIY/定制过程，结尾引导评论咨询",
+      "「1V1定制案例分享」系列，主打助眠场景",
+      "季节意象 + 国风美学系列（初雪、夏雨……）"
+    ]
+  }
+};
+/* ===== 数据区结束 ===== */
+
+const D = window.__DASH_DATA;
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+document.getElementById("header-sub").textContent = "店铺 Nicole studio · 数据周期 " + D.period + " · 更新 " + D.updated;
+document.getElementById("gen-time").textContent = D.updated;
+
+// KPI
+document.getElementById("kpis").innerHTML = D.kpis.map(k =>
+  `<div class="kpi"><div class="label">${esc(k.label)}</div><div class="value" style="color:var(--${k.cls||"text"})">${esc(k.value)}</div><div class="delta">${esc(k.delta)}</div></div>`
+).join("");
+
+// 漏斗表
+document.getElementById("funnel-period").textContent = D.funnel.period;
+const fh = ["商品","访客数","环比","加购件数","环比","支付件数","环比","支付金额","环比","成功退款","环比","加购率","支付率"];
+const fr = D.funnel.rows.map(r =>
+  `<tr class="hl-${r[13]||""}">
+     <td>${esc(r[0])}</td>
+     <td class="num">${esc(r[1])}</td><td class="num ${r[2][0]==="+"?"up":r[2][0]==="-"? (r[2][1]==="-"?"flat":"down") : "flat"}">${esc(r[2])}</td>
+     <td class="num">${esc(r[3])}</td><td class="num ${r[4][0]==="+"?"up":r[4][0]==="-"? (r[4][1]==="-"?"flat":"down") : "flat"}">${esc(r[4])}</td>
+     <td class="num">${esc(r[5])}</td><td class="num ${r[6][0]==="+"?"up":r[6][0]==="-"? (r[6][1]==="-"?"flat":"down") : "flat"}">${esc(r[6])}</td>
+     <td class="num">${esc(r[7])}</td><td class="num ${r[8][0]==="+"?"up":r[8][0]==="-"? (r[8][1]==="-"?"flat":"down") : "flat"}">${esc(r[8])}</td>
+     <td class="num">${esc(r[9])}</td><td class="num ${r[10][0]==="+"?"up":r[10][0]==="-"? (r[10][1]==="-"?"flat":"down") : "flat"}">${esc(r[10])}</td>
+     <td class="num">${esc(r[11])}</td><td class="num">${esc(r[12])}</td>
+   </tr>`
+).join("");
+document.getElementById("funnel-table").innerHTML = "<thead><tr>" + fh.map(h=>`<th class="${h.endsWith("数")||h.endsWith("额")||h.includes("率")?"num":""}">${esc(h)}</th>`).join("") + "</tr></thead><tbody>" + fr + "</tbody>";
+
+document.getElementById("funnel-notes").innerHTML = D.funnel.notes.map(n =>
+  `<div class="mini"><h3>${esc(n.title)}</h3><p class="${n.cls}">${esc(n.text)}</p></div>`
+).join("");
+
+// 新品
+document.getElementById("new-period").textContent = D.newProducts.period;
+document.getElementById("new-stats").innerHTML = D.newProducts.stats.map(s =>
+  `<div class="stat"><div class="label">${esc(s.label)}</div><div class="value">${esc(s.value)}</div><div class="vs">${esc(s.vs)}</div></div>`
+).join("");
+const nh = ["商品","新品类型","上新时间","访客","加购","支付买家","支付金额","UV价值","销量 / 评价状态"];
+document.getElementById("new-table").innerHTML = "<thead><tr>" + nh.map(h=>`<th>${esc(h)}</th>`).join("") + "</tr></thead><tbody>" +
+  D.newProducts.rows.map(r => {
+    const isHot = r[1] === "人气新品";
+    return `<tr class="${isHot ? "hl-yellow" : ""}">${r.map((c,i)=>{
+      if (i === 1 && isHot) return `<td><span class="badge yellow">人气新品</span></td>`;
+      return `<td class="${i>=3&&i<=7?"num":""}">${esc(c)}</td>`;
+    }).join("")}</tr>`;
+  }).join("") + "</tbody>";
+
+// PXI
+document.getElementById("pxi-stats").innerHTML = D.pxi.stats.map(s =>
+  `<div class="stat"><div class="label">${esc(s.label)}</div><div class="value" style="color:var(--${s.cls||"text"})">${esc(s.value)}</div></div>`
+).join("");
+document.getElementById("pxi-lists").innerHTML = D.pxi.lists.map(l =>
+  `<div class="mini"><h3>${esc(l.title)}</h3><p class="${l.cls}">${l.items.map(esc).join("<br>")}</p></div>`
+).join("");
+
+// 库存
+document.getElementById("stock-body").innerHTML =
+  `<div class="flex">
+     <div class="stat"><div class="label">库存模式</div><div class="value">${esc(D.stock.mode)}</div></div>
+     <div class="stat"><div class="label">商品总数</div><div class="value">${esc(D.stock.total)}</div></div>
+     <div class="stat"><div class="label">存在 SKU 缺货的商品</div><div class="value" style="color:var(--red)">${esc(D.stock.warnCount)}</div></div>
+   </div>
+   <div class="note" style="margin-top:12px">${esc(D.stock.note)}</div>
+   <div class="mini" style="margin-top:12px"><h3>核心商品缺货（需优先补货）</h3>
+   <table><thead><tr><th>商品</th><th>商品ID</th><th>可售库存</th><th>状态</th><th>缺货情况</th></tr></thead><tbody>
+   ${D.stock.core.map(s=>`<tr><td>${esc(s.name)}</td><td>${esc(s.id)}</td><td class="num">${esc(s.stock)}</td><td>${esc(s.status)}</td><td><span class="badge red">${esc(s.sku)}</span></td></tr>`).join("")}
+   </tbody></table></div>
+   <div class="mini" style="margin-top:12px"><h3>IP 周边缺货（按运营规则仅供参考）</h3>
+   <table><thead><tr><th>商品</th><th>商品ID</th><th>可售库存</th><th>缺货情况</th></tr></thead><tbody>
+   ${D.stock.ip.map(s=>`<tr><td>${esc(s.name)}</td><td>${esc(s.id)}</td><td class="num">${esc(s.stock)}</td><td><span class="badge yellow">${esc(s.sku)}</span></td></tr>`).join("")}
+   </tbody></table>`;
+
+// 内容监控
+const C = D.contentMonitor;
+document.getElementById("content-period").textContent = "关键词「" + C.keyword + "」 · " + C.period;
+document.getElementById("content-note").textContent = C.note;
+const numCols = new Set(["点赞", "收藏", "评论", "分享", "互动值（百分制）"]);
+const contentHost = document.getElementById("content-tables");
+contentHost.innerHTML = "";
+(C.tables || []).forEach(t => {
+  const rows = t.rows || [];
+  const box = document.createElement("div");
+  box.className = "mini";
+  box.style.marginTop = "12px";
+  const head = `<h3>关键词：${esc(t.term)}</h3>`;
+  if (!rows.length) {
+    box.innerHTML = head + '<p style="color:var(--muted);margin-top:6px">暂无数据（下次监控后填充）</p>';
+    contentHost.appendChild(box);
+    return;
+  }
+  const maxIv = Math.max.apply(null, rows.map(r => Number(r[8]) || 0));
+  const ch = ["平台", "标题 / 作者", "二维码", "点赞", "收藏", "评论", "分享", "互动值（百分制）"];
+  const tbody = rows.map(r => {
+    const badge = r[0] === "xiaohongshu"
+      ? '<span class="badge red">小红书</span>'
+      : '<span class="badge blue">抖音</span>';
+    const m = String(r[2]).match(/explore\/([0-9a-zA-Z]+)/);
+    const qr = m ? (t.qr || []).find(q => q.id === m[1]) : null;
+    const iv = Number(r[8]) || 0;
+    const score = maxIv > 0 ? Math.round(iv / maxIv * 100) : 0;
+    const scoreCls = score >= 80 ? "red" : score >= 50 ? "yellow" : "blue";
+    return `<tr>
+      <td>${badge}</td>
+      <td><a href="${esc(r[2])}" target="_blank" rel="noopener" style="color:var(--blue)">${esc(r[1])}</a><br><span style="color:var(--muted);font-size:13px">${esc(r[3])}</span></td>
+      <td style="text-align:center">${qr ? `<img src="${qr.data}" width="80" height="80" alt="扫码查看小红书笔记" style="border-radius:4px">` : '<span style="color:var(--muted)">—</span>'}</td>
+      <td class="num">${esc(r[4])}</td><td class="num">${esc(r[5])}</td><td class="num">${esc(r[6])}</td><td class="num">${esc(r[7])}</td>
+      <td class="num"><span class="badge ${scoreCls}" style="font-size:14px;font-weight:700">${score}分</span><br><span style="color:var(--muted);font-size:12px">${esc(r[8])}</span></td>
+    </tr>`;
+  }).join("");
+  box.innerHTML = head +
+    '<div class="table-wrap"><table><thead><tr>' +
+    ch.map(h => `<th class="${numCols.has(h) ? "num" : ""}">${esc(h)}</th>`).join("") +
+    '</tr></thead><tbody>' + tbody + '</tbody></table></div>';
+  contentHost.appendChild(box);
+});
+
+document.getElementById("content-analyses").innerHTML = C.analyses.map(a =>
+  `<div class="mini"><h3>${esc(a.title)}</h3>
+     <p style="margin-top:6px"><b>可复用选题：</b>${esc(a.topic)}</p>
+     <p style="margin-top:6px"><b>爆款因素：</b>${esc(a.factors)}</p>
+   </div>`
+).join("");
+
+document.getElementById("content-topics").innerHTML =
+  "<h3>优先选题建议（可直接做内容）</h3><p>" + C.topics.map((t, i) => `${i + 1}. ${esc(t)}`).join("<br>") + "</p>";
+</script>
+</body>
+</html>
