@@ -128,6 +128,25 @@
   .stat .label { color: var(--muted); font-size: 13px; }
   .stat .value { font-size: 22px; font-weight: 700; margin-top: 4px; }
   .stat .vs { color: var(--muted); font-size: 13px; margin-top: 3px; }
+  .upd-btn {
+    font: inherit;
+    cursor: pointer;
+    background: rgba(96,165,250,.14);
+    color: var(--blue);
+    border: 1px solid rgba(96,165,250,.45);
+    border-radius: 999px;
+    padding: 2px 14px;
+    font-size: 13px;
+    line-height: 1.7;
+    white-space: nowrap;
+    transition: background .15s;
+  }
+  .upd-btn:hover { background: rgba(96,165,250,.28); }
+  .upd-btn:disabled { opacity: .55; cursor: not-allowed; }
+  .upd-status { font-size: 12px; color: var(--muted); font-weight: 400; }
+  .upd-status.ok { color: var(--green); }
+  .upd-status.err { color: var(--red); }
+  section h2 .upd-group { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; }
   footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 8px; }
   @media (max-width: 900px) {
     .kpis { grid-template-columns: repeat(2, 1fr); }
@@ -187,32 +206,42 @@
 
 
 <section id="sec-funnel">
-  <h2>① 商品排行 · 漏斗分析（7 天）<span class="tag" id="funnel-period"></span></h2>
+  <h2>① 商品排行 · 漏斗分析（7 天）<span class="tag" id="funnel-period"></span>
+    <span class="upd-group"><button class="upd-btn" type="button" data-module="funnel">更新</button><span class="upd-status" id="st-funnel"></span></span>
+  </h2>
   <div class="note">口径：访客 → 加购 → 支付，支付率 = 支付件数 ÷ 访客数；带环比较上一周期。</div>
   <div class="table-wrap"><table id="funnel-table"></table></div>
   <div class="cards2" id="funnel-notes"></div>
 </section>
 
 <section id="sec-new">
-  <h2>② 新品追踪（近两月上架 · 7 天）<span class="tag" id="new-period"></span></h2>
+  <h2>② 新品追踪（近两月上架 · 7 天）<span class="tag" id="new-period"></span>
+    <span class="upd-group"><button class="upd-btn" type="button" data-module="new">更新</button><span class="upd-status" id="st-new"></span></span>
+  </h2>
   <div class="flex" id="new-stats"></div>
   <div class="note" style="margin-top:14px">表现突出的新品（按成交/流量）：</div>
   <div class="table-wrap"><table id="new-table"></table></div>
 </section>
 
 <section id="sec-pxi">
-  <h2>③ 商品体验分（PXI）</h2>
+  <h2>③ 商品体验分（PXI）
+    <span class="upd-group"><button class="upd-btn" type="button" data-module="pxi">更新</button><span class="upd-status" id="st-pxi"></span></span>
+  </h2>
   <div class="flex" id="pxi-stats"></div>
   <div class="cards2" id="pxi-lists"></div>
 </section>
 
 <section id="sec-stock">
-  <h2>④ 仓储库存</h2>
+  <h2>④ 仓储库存
+    <span class="upd-group"><button class="upd-btn" type="button" data-module="stock">更新</button><span class="upd-status" id="st-stock"></span></span>
+  </h2>
   <div id="stock-body"></div>
 </section>
 
 <section id="sec-content">
-  <h2>⑤ 内容监控 · 小红书/抖音爆款（饰品赛道）<span class="tag" id="content-period"></span></h2>
+  <h2>⑤ 内容监控 · 小红书/抖音爆款（饰品赛道）<span class="tag" id="content-period"></span>
+    <span class="upd-group"><button class="upd-btn" type="button" data-module="content">更新</button><span class="upd-status" id="st-content"></span></span>
+  </h2>
   <div class="note" id="content-note"></div>
   <div id="content-tables"></div>
   <div class="note" style="margin-top:14px">小红书笔记在电脑浏览器打不开时，用小红书 App「扫一扫」扫表格中“二维码”列即可查看。</div>
@@ -228,7 +257,7 @@
   <button class="tab" data-page="content">内容</button>
 </nav>
 
-<footer>由每周一 14:00 定时任务自动更新 · 页面每 5 分钟自动刷新 · 生成于 <span id="gen-time"></span></footer>
+<footer>由每周一 14:00 定时任务自动更新 · 各模块支持手动更新（电脑打开 http://localhost:8123 ，手机同一 WiFi 打开 http://192.168.2.31:8123 ，点击模块右上角「更新」即可）· 页面每 5 分钟自动刷新 · 生成于 <span id="gen-time"></span></footer>
 
 <script>
 /* ===== 数据区：每周任务运行后更新此处即可 ===== */
@@ -934,6 +963,7 @@ window.__DASH_DATA = {
 
 
 
+
 };
 /* ===== 数据区结束 ===== */
 
@@ -1114,6 +1144,95 @@ extraHost.innerHTML = "";
   });
   window.addEventListener("resize", apply);
   apply();
+})();
+</script>
+<script>
+/* 手动更新按钮：连接本机更新服务（updater_server.py，端口 8123） */
+(function () {
+  const MODS = ["funnel", "new", "pxi", "stock", "content"];
+  const MOD_NAMES = { funnel: "① 商品排行", new: "② 新品追踪", pxi: "③ 体验分", stock: "④ 库存", content: "⑤ 内容监控" };
+  const LAN_URL = "http://192.168.2.31:8123";
+  const isLocal =
+    window.location.protocol === "file:" ||
+    /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname) ||
+    /^192\.168\./.test(window.location.hostname);
+  const BASE = window.location.protocol === "file:" ? "http://127.0.0.1:8123" : window.location.origin;
+  let polling = false;
+  let justTriggered = {};
+
+  function setStatus(mod, text, cls) {
+    const el = document.getElementById("st-" + mod);
+    if (el) { el.textContent = text || ""; el.className = "upd-status" + (cls ? " " + cls : ""); }
+  }
+  function btn(mod) { return document.querySelector('.upd-btn[data-module="' + mod + '"]'); }
+  function setBusy(mod, busy) { const b = btn(mod); if (b) b.disabled = busy; }
+
+  function trigger(mod) {
+    if (!isLocal) {
+      setStatus(mod, "本页仅供查看；手动更新请用下面地址打开（会自动带更新指令）", "err");
+      window.open(LAN_URL + "/?update=" + mod, "_blank");
+      return;
+    }
+    setBusy(mod, true);
+    justTriggered[mod] = true;
+    setStatus(mod, "正在请求…");
+    fetch(BASE + "/api/update/" + mod, { method: "POST" })
+      .then(function (r) {
+        if (!r.ok) return r.json().then(function (j) { throw new Error(j.error || r.statusText); });
+        return r.json();
+      })
+      .then(function () { setStatus(mod, "已开始，更新中…（完成后本页自动刷新）"); poll(); })
+      .catch(function (e) {
+        justTriggered[mod] = false;
+        setBusy(mod, false);
+        setStatus(mod, "连不上更新服务，请确认电脑已开机并运行“运营检查更新服务”：电脑 http://localhost:8123 ，手机同一 WiFi http://192.168.2.31:8123", "err");
+      });
+  }
+
+  function poll() {
+    if (polling) return;
+    polling = true;
+    (function tick() {
+      fetch(BASE + "/api/status")
+        .then(function (r) { return r.json(); })
+        .then(function (s) {
+          const running = s.running;
+          if (running) {
+            setStatus(running, "更新中…（预计数分钟）");
+            setTimeout(tick, 3000);
+          } else {
+            polling = false;
+            let anyJustDone = false;
+            MODS.forEach(function (m) {
+              setBusy(m, false);
+              const last = (s.last || {})[m];
+              if (last) {
+                if (last.state === "ok") setStatus(m, "上次更新成功 " + last.at, "ok");
+                else if (last.state === "fail") setStatus(m, "上次更新失败：" + last.message, "err");
+              }
+              if (justTriggered[m] && last && last.state === "ok") anyJustDone = true;
+              if (justTriggered[m] && last && last.state === "fail") justTriggered[m] = false;
+            });
+            if (anyJustDone) { setTimeout(function () { location.reload(); }, 1500); }
+          }
+        })
+        .catch(function () {
+          polling = false;
+          MODS.forEach(function (m) { setBusy(m, false); });
+        });
+    })();
+  }
+
+  MODS.forEach(function (m) {
+    const b = btn(m);
+    if (b) b.addEventListener("click", function () { trigger(m); });
+  });
+
+  const qs = new URLSearchParams(window.location.search);
+  const auto = qs.get("update");
+  if (auto && MODS.indexOf(auto) >= 0) setTimeout(function () { trigger(auto); }, 300);
+
+  poll();
 })();
 </script>
 </body>
