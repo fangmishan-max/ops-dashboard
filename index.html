@@ -351,606 +351,57 @@ window.__DASH_DATA = {
     ]
   },
   contentMonitor: {
-  "period": "2026-08-08 全量重跑（充值后）· 近 7 天：2026-08-01 ~ 2026-08-08",
+  "period": "2026-08-10 更新 · 近 7 天：2026-08-03 ~ 2026-08-10（API 余额不足，未采集）",
   "keyword": "水晶手串、手串、手链、饰品",
-  "note": "规则：只监控最近 7 天内发布的热点爆款内容；关键词：水晶手串、手串、手链、饰品（小红书+抖音，每个关键词 6 篇：抖音 3 + 小红书 3）。互动值：小红书 = 点赞+2×收藏+2×评论；抖音 = 点赞+2×收藏+3×评论+4×分享。互动值按百分制展示（本组最高为 100 分，其余按比例换算）；80 分以上红、50-79 分黄、50 分以下蓝。低粉爆文口径：仅抖音，作者粉丝 < 3000、非广告，粉丝量标注在作者栏（小红书低粉已按规则停采）；带货爆款口径：抖音，非广告 + 作者开通商品橱窗/店铺（近似判定）。相关性过滤：正文或话题标签中必须包含饰品相关词（手链/手串/项链/水晶/黄金/首饰/长尾搭配词/平台活动词等），仅账号昵称命中的内容不纳入。数据来源：Just One API 关键词热度搜索（本次为充值后全量重跑）。",
+  "note": "规则：只监控最近 7 天内发布的热点爆款内容；关键词：水晶手串、手串、手链、饰品（小红书+抖音，每个关键词 6 篇：抖音 3 + 小红书 3）。互动值：小红书 = 点赞+2×收藏+2×评论；抖音 = 点赞+2×收藏+3×评论+4×分享。互动值按百分制展示（本组最高为 100 分，其余按比例换算）；80 分以上红、50-79 分黄、50 分以下蓝。低粉爆文口径：仅抖音，作者粉丝 < 3000、非广告，粉丝量标注在作者栏（小红书低粉已按规则停采）；带货爆款口径：抖音，非广告 + 作者开通商品橱窗/店铺（近似判定）。相关性过滤：正文或话题标签中必须包含饰品相关词（手链/手串/项链/水晶/黄金/首饰/长尾搭配词/平台活动词等），仅账号昵称命中的内容不纳入。数据来源：Just One API 关键词热度搜索（本周常规采集）。本次更新失败：Just One API 余额不足（code=601），各表保留为空并标注「待补充」，未编造或复用旧数据。",
   "tables": [
     {
       "term": "水晶手串",
-      "rows": [
-        [
-          "xiaohongshu",
-          "沉浸式水晶手串定制｜1999年-处女座♍️",
-          "https://www.xiaohongshu.com/explore/6a734e7900000000050226ac",
-          "伊香珠宝首饰的店",
-          463,
-          259,
-          30,
-          9,
-          1041
-        ],
-        [
-          "douyin",
-          "物！美！价！廉！低成本变美之物✨百搭又出片 #超满意的手链 #被问爆的宝藏手链 #小众高级手链 #少女的心饰",
-          "https://www.douyin.com/video/7670522339410536826",
-          "六六呀6666",
-          69,
-          8,
-          4,
-          1,
-          101
-        ],
-        [
-          "xiaohongshu",
-          "淡人绝美手串/手镯叠戴sʜᴀʀᴇ🫧（自留极简版",
-          "https://www.xiaohongshu.com/explore/6a6f8a13000000000502ad59",
-          "李不得",
-          413,
-          121,
-          21,
-          16,
-          697
-        ],
-        [
-          "xiaohongshu",
-          "来烟台，一定要来体验下DIY水晶手串～",
-          "https://www.xiaohongshu.com/explore/6a75c4e20000000005030370",
-          "日进斗晶 水晶饰品集合地",
-          144,
-          171,
-          1,
-          9,
-          488
-        ]
-      ],
-      "qr": [
-        {
-          "id": "6a734e7900000000050226ac",
-          "title": "沉浸式水晶手串定制｜1999年-处女座♍️",
-          "data": "data:image/png;base64,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"
-        },
-        {
-          "id": "6a6f8a13000000000502ad59",
-          "title": "淡人绝美手串/手镯叠戴sʜᴀʀᴇ🫧（自留极简版",
-          "data": "data:image/png;base64,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"
-        },
-        {
-          "id": "6a75c4e20000000005030370",
-          "title": "来烟台，一定要来体验下DIY水晶手串～",
-          "data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqwAAAKsAQAAAAABudKdAAAGU0lEQVR4nO1dUa7kKAwsSvufucHe/1hzg+QErAIGbPLmr51Rr6rUGqUTUmp5jJ+xjSkVCbiYwQqIFhJCA5ECihYSgjTBQKSAooWEIE0wECmgaCEhSBMMRAooWkgI0oQ4HcrEL/TPjav4f++b1z1k3uzD7vHudU/7afDjjKIdIFJA0eJLhXDUDvt6lftz1GkKANTThvUh3TiYidhe/1IhiPbzYAKnaFNlC5vLR5vOh134m32m25w/se63624o/OvtJnN+LEULCUGa8Pp0qGdbFFyl/i611vLrnvvmFbSlQf3dfIP59fybv/YT4EdYRPsTiBRQtMgSwj8/375KBUr3B65Sr3vymyFwF/ew7iHsYMZvFW0DkQKKFhJCtAk1Tvly1DIsQ/uc9uj6VcMw8xKiaaAUDBKCNOGrp8NleYP72sUHRh7hxn191PLvfbNf92EzH2Gvv/BrPwx+mlC0E0QKKFokrx3CX/nmHtwfn4scY+zRHDkG67/sASIFFC0khERNgCUUehqx/+k/WjZhBA/v/IKPIo4xW3RxMijvMECkgKKFhJCoCZhJRrse09xSjT7zOBORM+cY7cl8RbnIBiIFFC0khERNwDap/c1VgTDdgH7h/QRXz9AfySYMECmgaCEhvBJPKP2ipRVWtnHmF9zXOsIIIxR5luO870tvA4gUULSQEN5aO8BFCaY/YHWM7qYtIqZNGAsN1TFGECmgaCEhJGoCtqJlX+c8rUGoc14FzKG8OZZAU3oL6a0smIH4UptwrkSDOQP9To8zzGiDu1i7IVwEUjbhOzWBooWE4OsYj+EJDM2w8sV+3e+3r9WFHeosa2yDZ4mjZNtApICihYTwYi4S/tFYGiwPYcQTfA2DL2aQn+BApICihYSQqAlYRQg+qziiiH4rtE9HrmBCzGMqnuBApICihYSQqAlYhUez2MAFFdeYGEyY1sB7CzPYqBhjA5ECihYSwjs2ocYko0subEVKPh8RxquOMYBIAUULCeGt/Q7VFTav3ZFzpM9XuuKErapBfsIAkQKKFhLCWz1VyrOOcbRNWIWO48ncJmn9WlveQXrrQKSAooWE8E7e4YhewahBeuYjwu7Irc+S4gkLRAooWkgIr2nC4eoYW9/mUsptLtq1r2a0lcLvu2ejz1GO1Qelt5AQpAn4v/RtPlY35i3quAxCHO/LoRVP+E5NoGghITRUt815cwbCzui4FcJnIZefsPIXlIJBCiZTYyC+tn8C3E1fdfCsb9zOg+jXqk/4Zk2gaCEhPPo2175/oaUPrH972+Mw8xEzs2D9E3xvxvFVCjZApICihYTw+r7I6pcMf9oFGTdLRjZKbyG9lQUzEP+DfoxHsAm7xfDlSf5dxRO+WBMoWkgIbu1QhkLcF8dpZ8iOtcBcQRj6sQ5PHbp+9RonybaBSAFFCwkhURPg/7yHvQzxFOl944Nrr7RcBe13CCBSQNFCQnilPqH+1GVxb6/07NLsbYXOlQ4gUkDRQkJ4yyZgRg8e5zjcQ+NBDy7zaDyKMUYQKaBoISEkagL8LungCcTjn0KVgq9f8hur1Y8xgEgBRQsJ4TU/AcMarNkd2qdsfdj2M2JkEwKIFFC0kBBe7KkCF1f0C4d9BeEMwr5XQvUJBiIFFC0khNd6qtQQM/RRxD0T4fyKcOysapYWiBRQtJAQEjUBezwhnh77Q4pha+u6hSLlJywQKaBoISG8WcdYQ+Tw5xXEn86QVY/WACIFFC0khERNgA8U+EKFFWz08NYgbqWcTxVPGCBSQNFCQngtxtjwCA648MJ4JfgJPshgr1B6C+mtLJiB+FI/oePhJ4TQgR/jSxrcCbOyCd+pCRQtJISGOn0D7yTEGELos+RbrzzOjJOf4ECkgKKFhPByP0aE9gjmDLjxfu/DfsqD1g4LRAooWkgIb53vYDjOe2f02BBdjtMOmLZ90IZxwHTpHZlab+ezaK/0ApECihYSwss24br7qlnLtfG1T/9uLjr69A8HwbSWC9LbASIFFC0khLf6MXbcBuE4V6PF4SR0b2F2Wek9G61tY/ci+sgbRAooWkgI0oS/kXfAFlhwj8JOqEcHNuUdHIgUULSQEBI1oTxOffsELuktpLcNRAooWkgI0gQDkQKKFhKCNMFApICihYQgTTAQKaBoISFIEwxJ0+E/O23lp2f6uAoAAAAASUVORK5CYII="
-        }
-      ]
+      "rows": [],
+      "qr": [],
+      "note": "待补充：API 余额不足（code=601），禁止编造数据"
     },
     {
       "term": "手串",
-      "rows": [
-        [
-          "xiaohongshu",
-          "不同平台应该怎么拍，看过来#流量密码 #新媒体运营 #运营 #手串",
-          "https://www.xiaohongshu.com/explore/6a7030f0000000000502ae60",
-          "小王是个运营",
-          646,
-          723,
-          6,
-          159,
-          2104
-        ],
-        [
-          "douyin",
-          "第一视角体验沈阳中药手串店🌿 #沈阳 #沈阳中药手串 #沈阳硬冰糖饰品集合店 #沈阳旅游",
-          "https://www.douyin.com/video/7670824237829939643",
-          "一块冰糖",
-          6789,
-          2567,
-          1020,
-          8708,
-          49815
-        ],
-        [
-          "xiaohongshu",
-          "当我又一次做中药手串",
-          "https://www.xiaohongshu.com/explore/6a7565920000000032030579",
-          "一念香故",
-          353,
-          225,
-          11,
-          2,
-          825
-        ],
-        [
-          "douyin",
-          "走到哪带到哪的专属手串#离脉搏最近的是",
-          "https://www.douyin.com/video/7670482065556696761",
-          "贾4⃣️鼎",
-          33178,
-          482,
-          415,
-          3321,
-          48671
-        ],
-        [
-          "xiaohongshu",
-          "方寸精致💫｜把温柔戴在手腕上",
-          "https://www.xiaohongshu.com/explore/6a712b1b00000000220132b8",
-          "做个闲人-",
-          271,
-          153,
-          81,
-          3,
-          739
-        ],
-        [
-          "douyin",
-          "教大家一种精致小巧还很结实的手串收尾结， 双连结的打法#手串绳结打法 #文玩收尾打结教程 #文玩串绳教程 #双连结 #打结技巧",
-          "https://www.douyin.com/video/7670599457214770929",
-          "磊哥玩串📿",
-          3975,
-          5694,
-          123,
-          541,
-          17896
-        ]
-      ],
-      "qr": [
-        {
-          "id": "6a7030f0000000000502ae60",
-          "title": "不同平台应该怎么拍，看过来#流量密码 #新媒体运营 #运营 #手串",
-          "data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqwAAAKsAQAAAAABudKdAAAGd0lEQVR4nO1dXc6rOgwcRued7uDb/7K+HZQV5CiJ4zjQI92HmiukGVUoBTqqXJM6/stWkICDGayAaCEhNBApoGghIUgTDEQKKFpICNIEA5ECihYSgjTBQKSAooWEIE1YH4fN8QKOeqyvbcOx1avjZD1u9cw8347LxwPtt8GvM4p2gEgBRYuHCQGlAXuJA+zV9VgHQHnPe/rbOmivfoOPJ8/7WUKgaCEhSBMMf8YA9Y9/f/tb7O9tf5d+vh3LsdW3e+lGQj+W4/Xp40QKKFpICNKEu+aEiNJngDYJzCd9L3Vm6ON69dUvfYpmEimgaCEhSBNufxy27kz4Kd2BYJ6E5nOoy4RuHvRlwm87879+22+AX2ER7ScQKaBokW8nlIuR0JYPBcerzgPNJNjGC8erHK+yl21YEevUQP1kkBCkCY9+HA6LG5id8FO2H3vK66AZAxZTaB7FfoPHHeLH7/i2Xwa/TShaB5ECihbJdsJpAVCNhI7uVejrhe5XbK96Jpy/rB+onwwSgjThkY8DLIjYw449thjPt8jjPO8xxx6U7GdGdHJCscjEn4yihYRwgyYcFl60J93P9FXDttk88LtNZ6OlIgQyty70k0kIBiIFFC2y7YT3SEY6/fW/z/dYCtO42a2FmN0kO6GBSAFFCwkh35+wWTShJSS0Y18t1LhDPbagQ40y1BSFlp5UBx3mZ+hBCuntBJECihYSQqImYNoAPXt5PNf+NroaomNhHoeFEBYUlN5CeqsZzEA8sd4BtgqYnkOvZTjd31cZYX5wBs0JT9YEihYSQkMJ9U2nM6caqMVI8ChDnCLmSUrBIAXTVGMgnhmLrIj+Q19HjBpJNySmp9E/0icE+RgfrAkULSSEoAnbSEG0OOMIO9Z5oPoPLWWxvEc2Y8exWbpjb6cwUh8l2wYiBRQtJIRETcDydz9sAEOINs6g5MmZcAlQtgGlt5DeagYzEE+sgdpLjDC2Pgnvrf/797ehaLr3TIitFSqOV3mqEChaSAjShIFy9QZcgo/TfvCkpvGp+XaEI2UnDBApoGghISRqAnwSmB7Fdcngawq/v982JxOH1g4LiBRQtJAQEjUB0TaI2UdLzlI4Xg2JWAw1JgdKbyG91QxmIJ5b7zCwRBvDjOFFECeX47ykOeGpmkDRQkJoKOsjf3YjhHSFU7rjyX6IDLITGogUULSQEPI1oYy/+5p+4DmNPS1hvPU+SzVL4ad4U6bTJentAJECihYSwm31Dvt/MAYuTsV5g3yMC4gUULSQEO6td8DV0+jw1gqhGMovBe8EpbeQ3moGMxDPzWMsy2BWTMcUhU8eSPdSak54rCZQtJAQTnbCHlyFp6KntQFjP54+uHRllJ2gp8xApICixS37QM3N4MZuDrYZnF0tlvC8v2u3pXa0zSD0k30AkQKKFhLCXbHI4l7E0FllpjT3e7w4+sojH+MCIgUULSSEG32MJWYqrq0SYt7ChwZNg0drhwEiBRQtJITb+jHi0oF5zXCODRg9mfk0LWhOGCBSQNFCQritLvI9DQNvtTRXCjEA4SsFL5Ly8gf5GA1ECihaSAg35jYj7uTi1Q1h3ojhiTgVaH+HC4gUULSQEG7PT0AodJrpScH3aMe4L4w7GGUnGIgUULSQEBI1ATHt6LRrw7I7ZBz42mHcZkflJywgUkDRQkLI14Stt2D9tX0hbTngO8j7rpG9Zatt/DSnhUtoktJbSAjShEfvNX9Y3lHfBq5nJfmgX/XH3neFm589XnM/+sRvS9FCQpAm3OVPwKceKX2w+Bw8KjF8CPEG5ScEECmgaCEh3NWPscQ8xtBS6Zq1eA5Tqi7yA4gUULSQEBI1AdHHGJ9x/9+P1sLiQ1jbOC89G1UDpYfXQKSAokW2j9Hx+rCli/kYX2PjpxB/7IN+ST/ZCiIFFC0khERNwFKnsPZTsuO/UpVGE5Wli6PshAkiBRQtJITbaqD2c6e1JUnpktl48jPIx7iCSAFFCwnhXk3Yxi6xpViP1pPLsS4f+rZxLWNh9nfVHrILiBRQtJAQ7rUTcDEPYnlUbNIYSyFUF3kBkQKKFhLC7f6EEveCDPtK9zNzsO4HoXqHFUQKKFpICImagLNbwKuf1m4JM21p3Y9+hjCX1kyU3kJ6qxnMQDyJdrtkI30Dx7OEQNFCQpAmGIgUULSQEKQJBiIFFC0kBGmCgUgBRQsJQZpgIFJA0eJhQvgLypj7J/LU95MAAAAASUVORK5CYII="
-        },
-        {
-          "id": "6a7565920000000032030579",
-          "title": "当我又一次做中药手串",
-          "data": "data:image/png;base64,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"
-        },
-        {
-          "id": "6a712b1b00000000220132b8",
-          "title": "方寸精致💫｜把温柔戴在手腕上",
-          "data": "data:image/png;base64,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"
-        }
-      ]
+      "rows": [],
+      "qr": [],
+      "note": "待补充：API 余额不足（code=601），禁止编造数据"
     },
     {
       "term": "手链",
-      "rows": [
-        [
-          "xiaohongshu",
-          "喜欢手链的别划走",
-          "https://www.xiaohongshu.com/explore/6a71c93e0000000008011543",
-          "妤伊函",
-          4464,
-          3114,
-          741,
-          45,
-          12174
-        ],
-        [
-          "douyin",
-          "1000克的黄金版秋天第一杯奶茶 你心动了吗#秋天第一杯奶茶 #黄金 #金首饰",
-          "https://www.douyin.com/video/7671232244815564084",
-          "小垒师傅在打金",
-          290449,
-          13552,
-          15012,
-          461895,
-          2210169
-        ],
-        [
-          "xiaohongshu",
-          "对不起 真的很美🪺",
-          "https://www.xiaohongshu.com/explore/6a71b0130000000022010905",
-          "lilullistore",
-          4038,
-          1375,
-          181,
-          190,
-          7150
-        ],
-        [
-          "douyin",
-          "决定了 你的手我握了就不会放掉 感谢你像幸运星一样出现在我生命中#范琦幸运星河手链  #多幸运有个我们   #FANCI范琦幸运星  #范琦时光恋人对戒",
-          "https://www.douyin.com/video/7670862256301404337",
-          "湫.",
-          15583,
-          402,
-          570,
-          309,
-          19333
-        ],
-        [
-          "xiaohongshu",
-          "用23瓶闪粉亮片混泰透最后会变成... 姐姐在小红书市集上发现了一家宝藏店铺，里面都是各种好看精致的手链而且是原创手作",
-          "https://www.xiaohongshu.com/explore/6a72bd3800000000330081c9",
-          "昭昭子",
-          3409,
-          1285,
-          187,
-          21,
-          6353
-        ],
-        [
-          "douyin",
-          "分享几个百搭又显贵气的手镯手链搭配！ #首饰就要bling #手链 #配饰分享 #日常分享好看的饰品",
-          "https://www.douyin.com/video/7669996785046084267",
-          "未知🐟",
-          4980,
-          3220,
-          80,
-          848,
-          15052
-        ]
-      ],
-      "qr": [
-        {
-          "id": "6a71c93e0000000008011543",
-          "title": "喜欢手链的别划走",
-          "data": "data:image/png;base64,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"
-        },
-        {
-          "id": "6a71b0130000000022010905",
-          "title": "对不起 真的很美🪺",
-          "data": "data:image/png;base64,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"
-        },
-        {
-          "id": "6a72bd3800000000330081c9",
-          "title": "用23瓶闪粉亮片混泰透最后会变成... 姐姐在小红书市集上发现了一家宝藏店铺，里面都是各种好看精致的手链而且是原创手作",
-          "data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqwAAAKsAQAAAAABudKdAAAGY0lEQVR4nO1dW44rKwwsSve/Zwez/2XNDjor4IqXMSTzdY45aqlKUSuh6VLkGMcYG1JGAF6MYAVECwmhgggBRQsJQZrQQYSAooWEIE3oIEJA0UJCkCZ0ECGgaCEhSBMGcoV9xNU/lutV2+s131jev3dzj+dbowwaZRVECChaRAuhjeU6zFNKuHJKKd/VYtRrNwWvZAakdBtX/7h+sgEiBBQtJIQjmpBSSl/lTRnbP8Ug4JXslb6Qvot9aBajNF7FQ+j+g3tcejtAhICihYQQqAn/fWh7lbGdrpyA8qpjv91J7lqsh7uuYMy3pWghIUgT/tFwyD9z7lCchIoeRmgzhZ/qGPhgwr/7tn8G/uHzov0dRAgoWsT7CTa2zUNo4z0BucwUyiShNL6+ysfZuU8eVtNA/WSQEKQJjx4Or+YIjMFe5wvFPaieQPquxqGGC9J3/egnFF9vjz9UCKL9+2AAp2hP+AnZt7W4YnUP2mv2sahju9tciA8hBcZ8W4oWEoI04Uh+QkNvuXsGQs9G8BkIrXEsN/SnRrcef1B+QgcRAooWEsKxdYfrLosONZ7QvILc4gnDE+geQ/MQxgqF3XLeAqW3kBCkCY8cDhj/7C41caQsWu5B73kvXkT3K9xKhGNjzJelaCEhSBOO2ATYpMCWGodBmNOEtaVg9JyZz8ptniBCQNFCQojXhOzSEXuy4qhr6CEFF0yY4YUaYHTpi9JbDyIEFC0khDMxxvvDfGEaBPfGKqGWuYZn09xBg7eDCAFFi2AhlNyCloRQrxY6WIZ/W3ZslVDNDrSSKF84qZ9sgggBRQsJ4Ug8Id9LfGAGFpx7YL7EHod00wr5CQNECChaSAhH5g5YVxDmAN92SBimwHIYfDKDbIIDEQKKFhLCkT1VsgsOmKuwf3QbrUxvocEylxRP6CBCQNFCQjgzd8jTAkwT4bMTx5Kljy4ukcbhVyjGWEGEgKKFhHDKJsClLf3mFVjg0U8utgwH2YQKIgQULSSEI3mM2WUzeodhVjdYBuOIQJol8cURsgkDRAgoWkgIp+odUq1ZaEUNuRY+9PYrp+tumypYtHGWOcwiSsteovQWEoI04en7Nl9L8eO2KLn037yFlUp+wjM1gaKFhPBuE663NQi3HLldfXhB8YRPIEJA0UJCiNeEPMZ4L16wBMW2Y3Pbtn3MDFoqoy9zWG5JbzuIEFC0kBDOxBjv9SQXn6vgc5nsKUtV8s6D5g4TRAgoWkgIp/ZPQINLSlxKn0b/dmtJe/ZUWovsIEJA0UJCOJafAJe+aOlJvqJhdSFmYMGFFGQTBogQULSQEI7VO9xvvsGWhDAeWaqfrFH5CQuIEFC0kBBO1TsYlumDy2feUp3nlgtrTqPyGCuIEFC0kBDOxBMMvtpxtMw+fvi7bdmcRZBNaCBCQNFCQjhYA5V9/tLbKfPLFis2pzAonrCACAFFCwnhgCa8+snR6aunH2yFTst507Zt4ziHWvssfQIRAooWEsLhPMZrGIG3HRq9L+ErpPyejZo7DBAhoGghIRzRhHyXs6Tt8EdrXE6QrEdLf/QN1lwFSm8hIUgTHjkc4BcR9sihTzlYMxu30ied+fJ8TaBoISH8su6Q10nBvgmbtw9bSZRijAuIEFC0kBAOng3XsK1C+vyEfY/WbUmiQec7aPB2ECGgaHFwn6V+Y9+KuXZ2pVJzRdI7D7IJE0QIKFpICIGaALMJ7zmNi+cwOr9v+b7vqyA/oYMIAUULCSFeE9JX9xBKfkIb7HVHte04yLLuYO3jTMnW2LqNzpTeQkKQJuCJwwHTFXAugS+GsjmFjzMsh01vRZHyEx6pCRQtJASnCcng/u6bD9DyG3tj3X/JZg3mQrRb5kJIthVECChaSAgHNOFa4wZuewTr2p2HOvYtBdqsR09q0txhgggBRQsJIVATsCw+vu+l5tccvZVwNdTvbFqLrCBCQNFCQjhrE7LfFcH3dGfGLTEEa1fO0gIiBBQtJIRTZ74YyjEu3UrcdgRMeXOV8V9u1BNeSrfa0+IIw4gQIaBoISFIE07un5A/HAE5T4rcphjt8XVJQnMHByIEFC0khEBNgA8tFjjjsO3Z/uH4p63PTHqk9BbSW1mwDuJJtGkJGfwtvJ4lBIoWEoI0oYMIAUULCUGa0EGEgKKFhCBN6CBCQNFCQpAmdBAhoGjxMCH8DzlY19m0UTHsAAAAAElFTkSuQmCC"
-        }
-      ]
+      "rows": [],
+      "qr": [],
+      "note": "待补充：API 余额不足（code=601），禁止编造数据"
     },
     {
       "term": "饰品",
-      "rows": [
-        [
-          "xiaohongshu",
-          "月绒吊坠渲染效果图已出 成品制作中！",
-          "https://www.xiaohongshu.com/explore/6a706c6d000000003501678b",
-          "Borland Atelier",
-          4874,
-          1794,
-          1135,
-          450,
-          10732
-        ],
-        [
-          "douyin",
-          "#平价好看小饰品推荐 #首饰分享 @DOU+小助手",
-          "https://www.douyin.com/video/7669791454126490853",
-          "古丽首饰",
-          3019,
-          1363,
-          665,
-          1047,
-          11928
-        ],
-        [
-          "xiaohongshu",
-          "饰品分享｜淡颜韩女的素素首饰 #饰品 #好物分享 #购物分享 #长期主义 #长期主义 #韩系妆容",
-          "https://www.xiaohongshu.com/explore/6a745ce30000000025006ed5",
-          "大花",
-          3222,
-          1445,
-          175,
-          92,
-          6462
-        ],
-        [
-          "douyin",
-          "亲亲您点的淡人饰品大合集第2️⃣期请签收😘 #饰品 #首饰 #好物分享 #学生党 #平价",
-          "https://www.douyin.com/video/7670149388106577083",
-          "哈喽",
-          3742,
-          2433,
-          258,
-          533,
-          11514
-        ],
-        [
-          "xiaohongshu",
-          "内地很贵，香港很便宜之买金篇！超全攻略",
-          "https://www.xiaohongshu.com/explore/6a719b81000000002403ef8f",
-          "ddd香港上学记",
-          1377,
-          1842,
-          70,
-          812,
-          5201
-        ],
-        [
-          "douyin",
-          "盘子花里胡哨的极繁小众浮夸首饰分享 #首饰分享 #首饰 #小众饰品 #极繁主义 #饰品分享",
-          "https://www.douyin.com/video/7669391344012736238",
-          "猪恋盘子",
-          7963,
-          541,
-          124,
-          278,
-          10529
-        ]
-      ],
-      "qr": [
-        {
-          "id": "6a706c6d000000003501678b",
-          "title": "月绒吊坠渲染效果图已出 成品制作中！",
-          "data": "data:image/png;base64,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"
-        },
-        {
-          "id": "6a745ce30000000025006ed5",
-          "title": "饰品分享｜淡颜韩女的素素首饰 #饰品 #好物分享 #购物分享 #长期主义 #长期主义 #韩系妆容",
-          "data": "data:image/png;base64,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"
-        },
-        {
-          "id": "6a719b81000000002403ef8f",
-          "title": "内地很贵，香港很便宜之买金篇！超全攻略",
-          "data": "data:image/png;base64,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"
-        }
-      ]
+      "rows": [],
+      "qr": [],
+      "note": "待补充：API 余额不足（code=601），禁止编造数据"
     }
   ],
   "extraTables": [
     {
       "title": "饰品赛道 · 近 7 天低粉爆文（抖音 · 5 篇）",
-      "rows": [
-        [
-          "douyin",
-          "分享几个百搭又显贵气的手镯手链搭配！ #首饰就要bling #手链 #配饰分享 #日常分享好看的饰品",
-          "https://www.douyin.com/video/7669996785046084267",
-          "未知🐟（粉丝 85）",
-          4980,
-          3220,
-          80,
-          848,
-          15052
-        ],
-        [
-          "douyin",
-          "细手腕福音‼️刚刚好美到心尖的直切金手串💫\n#配饰的重要性 #直切手串 #黄金 #适合女生的手串推荐 #黄金手串",
-          "https://www.douyin.com/video/7670447446494080936",
-          "小金鱼宝宝（粉丝 1256）",
-          1354,
-          502,
-          25,
-          2173,
-          11125
-        ],
-        [
-          "douyin",
-          "🩵青靛色系 清新夏日|小众手链合集*5🫧 #手链#饰品 #饰品搭配 #饰品分享 #饰品控",
-          "https://www.douyin.com/video/7670840903208056435",
-          "尹一夏（粉丝 1059）",
-          4552,
-          1996,
-          33,
-          509,
-          10679
-        ],
-        [
-          "douyin",
-          "饰品大王全网寻找精神股东，分红每期安排 #饰品#饰品大王#饰品分享 #精神股东#vlog日常",
-          "https://www.douyin.com/video/7670806684960637114",
-          "饰品大王刘小胖（粉丝 2517）",
-          942,
-          131,
-          1484,
-          41,
-          5820
-        ],
-        [
-          "douyin",
-          "桃核手串#日常盘串",
-          "https://www.douyin.com/video/7670499457821384293",
-          "一点零零七（粉丝 257）",
-          1072,
-          109,
-          1129,
-          271,
-          5761
-        ]
-      ],
+      "rows": [],
       "qr": [],
-      "note": "口径：仅抖音，作者粉丝 < 3000、非广告、近 7 天内发布且互动突出；粉丝量已标注在作者栏（小红书低粉已按规则停采）。本期 5 篇"
+      "note": "待补充：API 余额不足（code=601），禁止编造数据"
     },
     {
       "title": "跨赛道 · 近 7 天低粉爆文（抖音 · 3 篇）",
-      "rows": [
-        [
-          "douyin",
-          "答应大家的一人食餐具分享来啦🥣用漂亮碗吃漂亮饭‼️ #真实生活分享计划 #高颜值厨具 #餐具好物 #家居好物 #厨房好物推荐",
-          "https://www.douyin.com/video/7671198263450905078",
-          "一口烟火气（粉丝 1151）",
-          8125,
-          4565,
-          212,
-          1618,
-          24363
-        ],
-        [
-          "douyin",
-          "5分钟跟练完 📸上镜直接原生大美女。 有些妆只是看着淡，其实也不简单。。。对比特别夸张的腮红，眉眼结构的@塑造才是精髓！#适合淡颜的上镜妆容 #韩妆 #眼线教程 #韩系妆容 #妆教",
-          "https://www.douyin.com/video/7670901359357673209",
-          "椰椰再吃一口冰（粉丝 1538）",
-          2884,
-          2287,
-          42,
-          224,
-          8480
-        ],
-        [
-          "douyin",
-          "妆教！！！！6分半详细亚裔妆妆教终于来啦！感谢大家的喜欢！！！#亚裔甜心 #妆教 #glamup美瞳",
-          "https://www.douyin.com/video/7670479831133661605",
-          "Natalieee（粉丝 1813）",
-          2933,
-          1621,
-          88,
-          211,
-          7283
-        ]
-      ],
+      "rows": [],
       "qr": [],
-      "note": "口径：仅抖音，作者粉丝 < 3000、非广告、近 7 天内发布且互动突出；粉丝量已标注在作者栏（小红书低粉已按规则停采）。本期 3 篇"
+      "note": "待补充：API 余额不足（code=601），禁止编造数据"
     },
     {
       "title": "饰品赛道 · 近 7 天带货爆款视频（抖音 · 无推广 · 10 篇）",
-      "rows": [
-        [
-          "douyin",
-          "走到哪带到哪的专属手串#离脉搏最近的是",
-          "https://www.douyin.com/video/7670482065556696761",
-          "贾4⃣️鼎",
-          33178,
-          482,
-          415,
-          3321,
-          48671
-        ],
-        [
-          "douyin",
-          "教大家一种精致小巧还很结实的手串收尾结， 双连结的打法#手串绳结打法 #文玩收尾打结教程 #文玩串绳教程 #双连结 #打结技巧",
-          "https://www.douyin.com/video/7670599457214770929",
-          "磊哥玩串📿",
-          3975,
-          5694,
-          123,
-          541,
-          17896
-        ],
-        [
-          "douyin",
-          "三通收尾一根线完成，这样做 #每日分享#原创视频#纯手工编绳#文玩爱好者#文玩手串",
-          "https://www.douyin.com/video/7670583585486030246",
-          "左贴膜||右穿珠",
-          2673,
-          4389,
-          27,
-          593,
-          13904
-        ],
-        [
-          "douyin",
-          "#平价好看小饰品推荐 #首饰分享 @DOU+小助手",
-          "https://www.douyin.com/video/7669791454126490853",
-          "古丽首饰",
-          3019,
-          1363,
-          665,
-          1047,
-          11928
-        ],
-        [
-          "douyin",
-          "亲亲您点的淡人饰品大合集第2️⃣期请签收😘 #饰品 #首饰 #好物分享 #学生党 #平价",
-          "https://www.douyin.com/video/7670149388106577083",
-          "哈喽",
-          3742,
-          2433,
-          258,
-          533,
-          11514
-        ],
-        [
-          "douyin",
-          "🩵青靛色系 清新夏日|小众手链合集*5🫧 #手链#饰品 #饰品搭配 #饰品分享 #饰品控",
-          "https://www.douyin.com/video/7670840903208056435",
-          "尹一夏",
-          4552,
-          1996,
-          33,
-          509,
-          10679
-        ],
-        [
-          "douyin",
-          "盘子花里胡哨的极繁小众浮夸首饰分享 #首饰分享 #首饰 #小众饰品 #极繁主义 #饰品分享",
-          "https://www.douyin.com/video/7669391344012736238",
-          "猪恋盘子",
-          7963,
-          541,
-          124,
-          278,
-          10529
-        ],
-        [
-          "douyin",
-          "#听说每个女孩都有一个金手镯 #黄金全部按克 #开不开心都买黄金 #爱自己从买黄金开始",
-          "https://www.douyin.com/video/7671247344767223481",
-          "KS首饰品( 2 )",
-          1682,
-          450,
-          1354,
-          138,
-          7196
-        ],
-        [
-          "douyin",
-          "福贝手链的回应。",
-          "https://www.douyin.com/video/7671327118026361593",
-          "妆奁录",
-          2596,
-          167,
-          445,
-          171,
-          4949
-        ],
-        [
-          "douyin",
-          "长到我审美上的手串\n#万物皆可盘手串#申请加入串门",
-          "https://www.douyin.com/video/7671328998795285754",
-          "🥔泥",
-          3202,
-          189,
-          275,
-          47,
-          4593
-        ]
-      ],
+      "rows": [],
       "qr": [],
-      "note": "口径（程序近似）：非广告（ad_type=0）+ 作者开通商品橱窗/店铺（with_fusion_shop_entry / with_shop_entry）+ 饰品赛道相关、近 7 天内发布且互动突出。本期 10 篇。说明：抖音搜索接口不返回精确“挂车”标记，此判定为程序近似；如需精确判定需逐条调视频详情（会产生额外接口费用）。"
+      "note": "待补充：API 余额不足（code=601），禁止编造数据"
     }
   ],
-  "topicSuggestions": [
-    {
-      "link": "https://www.douyin.com/video/7671232244815564084",
-      "linkText": "1000克的黄金版秋天第一杯奶茶",
-      "type": "热点梗 × 实物化",
-      "content": "「秋天的第一杯奶茶」做成黄金手链/首饰，把节日热点变成可佩戴的实物。",
-      "factor": "节日热点梗 + 黄金稀缺感 + 强视觉冲击，易引发围观与转发"
-    },
-    {
-      "link": "https://www.douyin.com/video/7670824237829939643",
-      "linkText": "第一视角体验沈阳中药手串店",
-      "type": "第一视角探店",
-      "content": "第一视角带逛特色手串/文玩店，突出沉浸感与地域特色。",
-      "factor": "第一视角沉浸感 + 地域话题 + 猎奇门店，完播与转发双高"
-    },
-    {
-      "link": "https://www.douyin.com/video/7670456500767022761",
-      "linkText": "这些珠宝都是注胶的",
-      "type": "避雷科普",
-      "content": "手串/饰品避雷向内容：注胶、染色、假货辨别，引导自查“你手里的有没有”。",
-      "factor": "争议性科普 + 消费者痛点，天然触发评论与收藏"
-    },
-    {
-      "link": "https://www.douyin.com/video/7670599457214770929",
-      "linkText": "手串收尾双连结打法",
-      "type": "实用教程",
-      "content": "手串绳结/收尾打法教程，步骤简单可跟做。",
-      "factor": "高收藏实用教程 + 低门槛跟做，收藏率高于点赞"
-    },
-    {
-      "link": "https://www.douyin.com/video/7670879754313399205",
-      "linkText": "沉浸式打包｜手串存在的意义",
-      "type": "沉浸式 / ASMR",
-      "content": "沉浸式手串打包 + 白噪音，主打“送给重要的人”的情绪价值。",
-      "factor": "解压 ASMR + 氛围感 + 情绪价值，完播与分享表现好"
-    },
-    {
-      "link": "https://www.xiaohongshu.com/explore/6a72db0e000000002800407c",
-      "linkText": "MIGA自制拼豆服装饰品图纸分享",
-      "type": "图纸 / 素材分享",
-      "content": "自制拼豆饰品图纸/素材免费分享，引导关注取图。",
-      "factor": "免费资源 + 高收藏 + 关注引导，收藏与转粉转化强"
-    }
-  ]
+  "topicSuggestions": [],
+  "pendingNote": "待补充：API 余额不足（code=601），禁止编造数据"
 }
 
 
@@ -1056,6 +507,11 @@ if (topicHost) {
     box.innerHTML = '<div class="table-wrap"><table><thead><tr>' +
       th.map(h => `<th>${esc(h)}</th>`).join("") + '</tr></thead><tbody>' + tbody + '</tbody></table></div>';
     topicHost.appendChild(box);
+  } else {
+    const p = document.createElement("p");
+    p.style.color = "var(--muted)";
+    p.textContent = D.contentMonitor.pendingNote || "暂无数据（下次监控后填充）";
+    topicHost.appendChild(p);
   }
 }
 
@@ -1105,7 +561,7 @@ function renderBoomTable(host, t) {
 
 const contentHost = document.getElementById("content-tables");
 contentHost.innerHTML = "";
-(C.tables || []).forEach(t => renderBoomTable(contentHost, { title: "关键词：" + t.term, rows: t.rows, qr: t.qr }));
+(C.tables || []).forEach(t => renderBoomTable(contentHost, { title: "关键词：" + t.term, rows: t.rows, qr: t.qr, note: t.note }));
 
 const extraHost = document.getElementById("content-extra-tables");
 extraHost.innerHTML = "";
